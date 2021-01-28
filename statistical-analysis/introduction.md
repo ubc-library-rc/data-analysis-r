@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Introduction to R and R Studio
+title: R for Statistical Analysis
 nav_order: 7
 has_children: true
 ---
