@@ -3,20 +3,18 @@ layout: default
 title: Overview
 nav_order: 1
 ---
-# Introduction to R and RStudio
+# Data Analysis in R
 
-Do you want to learn about R but don't know where to start? This workshop is for you! **R** is a popular free software program with many applications in both the humanities and sciences. **RStudio** is a set of integrated tools designed to help you be more productive with R. This introductory level workshop introduces participants to R concepts, packages, and basic syntax using the RStudio environment.
+This three-part workshop series will provide an introduction to data analysis and data visualization in R (and R Studio). **R** is a popular free software program with many applications in both the humanities and sciences. **RStudio** is a set of integrated tools designed to help you be more productive with R.
 
-Workshop slides:
-- [HTML format](slides/intro-r-studio.slides.html){:target="_blank"} 
-- [PDF format](slides/intro-r-studio.pdf){:target="_blank"}
+1. **Introduction to R and RStudio** on February 5, 2021 and March 19, 2021
+Do you want to learn about R but don't know where to start? This workshop is for you! R is a popular free software program with many applications in both the humanities and sciences. RStudio is a set of integrated tools designed to help you be more productive with R. This introductory level workshop introduces participants to R concepts, packages, and basic syntax using the RStudio environment. Register here for [February 5 workshop](https://libcal.library.ubc.ca/event/3590290) or here for [March 19 workshop](https://libcal.library.ubc.ca/event/3590291).
 
-R markdown file:
-- [R markdown file](slides/Intro%20to%20R%20workshop.Rmd){:target="_blank"}
-- [R markdown file with answers](slides/Intro%20to%20R%20workshop%20with%20answers.Rmd){:target="_blank"}
+2. **Visualization with R** on February 26, 2021
+This workshop will introduce concepts and tools for visualizing data in R, with emphasis on the ggplot2 package. Participants are expected to be familiar with R and the RStudio environmnet (if you are new to R, consider attending Introduction to R and RStudio first). [Register here](https://libcal.library.ubc.ca/event/3590293).
 
-Optional files:
-- [R markdown file (extended version)](slides/Intro%20to%20R%20workshop%20(extended%20version).Rmd){:target="_blank"}
+3. **Statistical analysis with R** on April 16, 2021
+Many state-of-the-art models and various graphs are available in R. This workshop covers data preparation and management, descriptive statistics, and common statistical analysis (T-test, ANOVA, correlation, regression). This workshop is for participants who already have a basic understanding of R. [Register here](https://libcal.library.ubc.ca/event/3590376).
 
 ## Pre-workshop setup
 To participate fully you will need to install the latest versions of R and RStudio on your computer ahead of time.
