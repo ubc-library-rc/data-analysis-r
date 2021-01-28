@@ -2,6 +2,7 @@
 layout: default
 title: Introduction to R and R Studio
 nav_order: 5
+has_children: true
 ---
 
 # Introduction to R and RStudio
