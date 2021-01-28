@@ -3,6 +3,7 @@ title: "Intro to R workshop"
 author: "Jeremy Buhler and Albina Gibadullina"
 date: "February 5, 2020"
 output: rmarkdown::github_document
+parent: Introduction to R and R Studio
 ---
 
 # Intro to R and RStudio
