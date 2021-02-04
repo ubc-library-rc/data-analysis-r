@@ -18,4 +18,4 @@ R markdown file:
 - [R markdown file with answers](slides/Intro%20to%20R%20workshop%20with%20answers.Rmd){:target="_blank"}
 
 Optional files:
-- [R markdown file (extended version)](slides/Intro%20to%20R%20workshop%20(extended%20version).Rmd){:target="_blank"}
+- [R markdown file (extended version)](Intro%20to%20R%20workshop%20extended.Rmd){:target="_blank"}
