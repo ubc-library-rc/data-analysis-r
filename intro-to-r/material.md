@@ -3,6 +3,7 @@ layout: default
 title: Workshop material
 nav_order: 5
 parent: Introduction to R and R Studio
+nav_exclude: true
 ---
 
 # Introduction to R and RStudio

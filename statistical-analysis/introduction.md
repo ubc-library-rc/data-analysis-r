@@ -3,6 +3,7 @@ layout: default
 title: R for Statistical Analysis
 nav_order: 7
 has_children: true
+nav_exclude: true
 ---
 # R for Statistical Analysis
 
