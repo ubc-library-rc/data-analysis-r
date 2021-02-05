@@ -1,0 +1,13 @@
+.small {
+	font-size:0.6em; 
+	color: grey;
+	font-style: italic;
+}
+
+.reveal section img {
+	border-style: none;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+	text-transform: none;
+}

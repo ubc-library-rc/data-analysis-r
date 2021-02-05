@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Knitted output
+title: Workshop content 
 nav_order: 6
-parent: Introduction to R and R Studio
+parent: Intro to R and R Studio
 ---
 
 <html>
@@ -194,20 +194,8 @@ summary {
 
 
 
-
-<div class="fluid-row" id="header">
-
-
-
-<h1 class="title toc-ignore">Intro to R workshop</h1>
-<h4 class="author">Jeremy Buhler and Albina Gibadullina</h4>
-<h4 class="date">February 5, 2020</h4>
-
-</div>
-
-
 <div id="intro-to-r-and-rstudio" class="section level1">
-<h1>Intro to R and RStudio</h1>
+<h1>Workshop content</h1>
 <div id="installing-and-loading-needed-packages" class="section level2">
 <h2>Installing and loading needed packages</h2>
 <p>Install R packages</p>
