@@ -15,8 +15,8 @@ Workshop slides:
 - [PDF format](../slides/intro-r-studio.pdf){:target="_blank"}
 
 R markdown file:
-- [R markdown file](Intro-R-workshop.Rmd){:target="_blank"}
+- [R markdown file](Intro-R-workshop.Rmd)
 
 Optional files:
-- [R markdown file with answers](Intro-R-workshop-answers.Rmd){:target="_blank"}
-- [R markdown file (extended version)](Intro-R-workshop-extended.Rmd){:target="_blank"}
+- [R markdown file with answers](Intro-R-workshop-answers.Rmd)
+- [R markdown file (extended version)](Intro-R-workshop-extended.Rmd)
