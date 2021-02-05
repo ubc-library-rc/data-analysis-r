@@ -12,7 +12,6 @@ Do you want to learn about R but don't know where to start? This workshop is for
 
 Workshop slides:
 - [HTML format](../slides/intro-r-studio.html){:target="_blank"} 
-- [PDF format](../slides/intro-r-studio.pdf){:target="_blank"}
 
 R markdown file:
 - [R markdown file](Intro-R-workshop.Rmd){:target="_blank"}
