@@ -10,7 +10,7 @@ This three-part workshop series will provide an introduction to data analysis an
 1. [**Introduction to R and RStudio**](https://ubc-library-rc.github.io/data-analysis-r/intro-to-r/introduction.html) *(February 5, 2021 and March 19, 2021)*
   - Do you want to learn about R but don't know where to start? This workshop is for you! R is a popular free software program with many applications in both the humanities and sciences. RStudio is a set of integrated tools designed to help you be more productive with R. This introductory level workshop introduces participants to R concepts, packages, and basic syntax using the RStudio environment. Register for [February 5 workshop](https://libcal.library.ubc.ca/event/3590290) or [March 19 workshop](https://libcal.library.ubc.ca/event/3590291).
 
-2. **Visualization with R** *(February 26, 2021)*
+2. [**Visualization with R**](visualization/introduction.html) *(February 26, 2021)*
   - This workshop will introduce concepts and tools for visualizing data in R, with emphasis on the ggplot2 package. Participants are expected to be familiar with R and the RStudio environmnet (if you are new to R, consider attending Introduction to R and RStudio first). Register for [February 26 workshop](https://libcal.library.ubc.ca/event/3590293).
 
 3. **Statistical analysis with R** *(April 16, 2021)*
