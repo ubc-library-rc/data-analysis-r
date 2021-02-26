@@ -11,14 +11,14 @@ output: html_document
 
 Install R packages
 ```{r}
-#install.packages("dplyr")
-#install.packages("gglot2")
-#install.packages("gapminder")
-#install.packages("forcats")
-#install.packages("plotly")
-#install.packages("viridis")
-#install.packages("RColorBrewer")
-#install.packages("ggsci")
+install.packages("dplyr")
+install.packages("gglot2")
+install.packages("gapminder")
+install.packages("forcats")
+install.packages("plotly")
+install.packages("viridis")
+install.packages("RColorBrewer")
+install.packages("ggsci")
 ```
 
 

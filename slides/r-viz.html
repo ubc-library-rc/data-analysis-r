@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Intro to R and RStudio</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement( 'link' );
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match( /print-pdf/gi ) ? 'https://ubc-library-rc.github.io/reveal-ubc/css/print/pdf.css' : 'https://ubc-library-rc.github.io/reveal-ubc/css/print/paper.css';
+		document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+								<section data-background-color="#e6f7ff">
+
+					<h2>Visualization with R</h2>
+					<h4>UBC Library Research Commons</h4>
+					<br />
+					<p>Albina Gibadullina, <a href="mailto:albina.gibadullina@ubc.ca">albina.gibadullina@ubc.ca</a><br>
+					Jeremy Buhler, <a href="mailto:jeremy.buhler@ubc.ca">jeremy.buhler@ubc.ca</a></p>
+					<p><a href="http://ubc-library-rc.github.io/data-analysis-r/">http://ubc-library-rc.github.io/data-analysis-r/</a></p>
+
+				</section>
+				<section data-background-color="#e6f7ff">
+
+					<h3>Pre workshop setup</h3>
+					<br/>
+
+
+					<ol>
+						<li>Install <b>R</b></li>
+						<li>Install <b>R Studio</b></li>
+						<li>Download <b>R Markdown file</b></li>
+					</ol>
+
+				</section>
+
+				<section data-background-color="#e6f7ff" data-background-iframe="https://native-land.ca/api/embed/embed.html?maps=territories&amp;position=49.268264,-123.157480" data-background-interactive>
+
+					<p  style="background-color: rgba(255,255,255,0.5); margin-top: 50%">The Vancouver Campus is located on the traditional, ancestral, and unceded territory of the xʷməθkʷəy̓əm (Musqueam) people.<br/><span class="small">Map: <a href="https://native-land.ca/">https://native-land.ca/</a></span></p>
+				</section>
+				<section data-background-color="#e6f7ff">
+
+					<h3>Learning objectives</h3>
+					<br/>
+					<ol>
+						<li>Understand what visualizations R can produce</li>
+						<li>Create basic graphs with the <em>ggplot2</em> package</li>
+						<li>Learn to add color themes and interactivity</li>
+					</ol>
+
+				</section>
+
+				  
+				<section>
+					<h3>Participating online</h3>
+
+					<p><img src="images/zoom_toolbar.png" alt="Zoom toolbar" width="510"></p>
+
+					<p class="fragment fade-in-then-semi-out"><img src="images/reactions.png" alt="Reactions menu"></p>
+					<p class="fragment fade-in"><img src="images/participants_window_menu.png" alt="Participants window menu"></p>
+				</section>
+
+				<section>
+					<h3>Outline</h3>
+
+					<table style="font-size:smaller">
+						<tbody>
+							<tr>
+								<td>0:05</td>
+								<td>Setting the stage</td>
+							</tr>
+							<tr>
+								<td>0:15</td>
+								<td>Orientation to <em>ggplot2</em></td>
+							</tr>
+							<tr>
+								<td>0:25</td>
+								<td>Graph types: part 1</td>
+							</tr>
+							<tr>
+								<td><em>0:45</em></td>
+								<td><em>Questions/practice/break</em></td>
+							</tr>
+							<tr>
+								<td>0:50</td>
+								<td>Graph types: part 2</td>
+							</tr>
+							<tr>
+								<td>1:15</td>
+								<td>Themes and colors</td>
+							</tr>
+							<tr>
+								<td>1:35</td>
+								<td>Interactive graphs</td>
+							</tr>
+							<tr>
+								<td>1:50</td>
+								<td>Conclusion
+							</tr>
+
+						</tbody>
+					</table>
+
+				</section>
+
+
+				<section data-background-color="#e6f7ff">
+					<h3>R Markdown (.Rmd) file</h3>
+					<p>A text file that combines R <b>commands</b>, R <b>output</b>, and descriptive text</p>
+					<p class="fragment">Good for documenting, experimenting, and sharing your work</p>
+				</section>
+				<section>
+					<p><em>Download and open workshop .Rmd file in RStudio</em></p>
+				</section>
+
+
+				<section data-auto-animate>
+					<h4>R packages used in this workshop</h4>
+					<div class="small">
+						<ul>
+						<li><b>gapminder</b>: a sample dataset</li>
+						<li><b>dplyr</b>: for data manipulation</li>
+						<li><b>ggplot2</b>: for creating graphs</li>
+						<li><b>forcats</b>: working w/ categorical data</li>
+						<li><b>viridis</b>: colour palette package</li>
+						<li><b>RColorBrewer</b>: colour palette package</li>
+						<li><b>ggsci</b>: colour palette package</li>
+						<li><b>plotly</b>: for interactivity</li>
+					</ul>
+					</div>
+				</section>
+<section data-auto-animate>
+					<h4>R packages used in this workshop</h4>
+					<div class="small">
+						<ul>
+							<li style="background-color: yellow"><b>gapminder</b>: a sample dataset</li>
+						<li><b>dplyr</b>: for data manipulation</li>
+						<li><b>ggplot2</b>: for creating graphs</li>
+						<li><b>forcats</b>: working w/ categorical data</li>
+						<li><b>viridis</b>: colour palette package</li>
+						<li><b>RColorBrewer</b>: colour palette package</li>
+						<li><b>ggsci</b>: colour palette package</li>
+						<li><b>plotly</b>: for interactivity</li>
+					</ul>
+					</div>
+				</section>
+<section data-auto-animate>
+					<h4>R packages used in this workshop</h4>
+					<div class="small">
+						<ul>
+						<li><b>gapminder</b>: a sample dataset</li>
+						<li style="background-color: yellow"><b>dplyr</b>: for data manipulation</li>
+						<li style="background-color: yellow"><b>ggplot2</b>: for creating graphs</li>
+						<li style="background-color: yellow"><b>forcats</b>: working w/ categorical data</li>
+						<li><b>viridis</b>: colour palette package</li>
+						<li><b>RColorBrewer</b>: colour palette package</li>
+						<li><b>ggsci</b>: colour palette package</li>
+						<li><b>plotly</b>: for interactivity</li>
+					</ul>
+					</div>
+				</section>
+
+				<section data-auto-animate>
+					<h4>R packages used in this workshop</h4>
+					<div class="small">
+						<ul>
+						<li><b>gapminder</b>: a sample dataset</li>
+						<li><b>dplyr</b>: for data manipulation</li>
+						<li><b>ggplot2</b>: for creating graphs</li>
+						<li><b>forcats</b>: working w/ categorical data</li>
+						<li style="background-color: yellow"><b>viridis</b>: colour palette package</li>
+						<li style="background-color: yellow"><b>RColorBrewer</b>: colour palette package</li>
+						<li style="background-color: yellow"><b>ggsci</b>: colour palette package</li>
+						<li><b>plotly</b>: for interactivity</li>
+					</ul>
+					</div>
+				</section>
+<section data-auto-animate>
+					<h4>R packages used in this workshop</h4>
+					<div class="small">
+						<ul>
+							<li><b>gapminder</b>: a sample dataset</li>
+						<li><b>dplyr</b>: for data manipulation</li>
+						<li><b>ggplot2</b>: for creating graphs</li>
+						<li><b>forcats</b>: working w/ categorical data</li>
+						<li><b>viridis</b>: colour palette package</li>
+						<li><b>RColorBrewer</b>: colour palette package</li>
+						<li><b>ggsci</b>: colour palette package</li>
+						<li style="background-color: yellow"><b>plotly</b>: for interactivity</li>
+					</ul>
+					</div>
+				</section>
+				<section>
+					<h3>ggplot2</h3>
+					<p>A data visualization package <a href="https://gapminder.org">https://ggplot2.tidyverse.org/</a></p>
+					<p class="fragment">Implements the <b>grammar of graphics</b>, a system for designing and building graphs</p></p>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code"><code class="R" data-trim data-line-numbers="1-3|1|2|3">
+countries %>%
+  ggplot(aes(x=continent))+
+    geom_bar()
+					</code></pre>
+					<img class="fragment fade-in-then-out" src="images/bar1.png"/>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code"><code data-trim data-line-numbers="2">
+countries %>%
+  ggplot(aes(x=continent, fill=continent))+
+    geom_bar()
+					</code></pre>
+					<img class="fragment" src="images/bar2.png"/>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code"><code data-trim data-line-numbers>
+countries %>%
+  ggplot(aes(x=continent, fill=continent))+
+    geom_bar()
+	labs(title="Counts of observations by continent", 
+	x="Continents", y="# of observations")
+					</code></pre>
+					<img class="fragment" src="images/bar3.png"/>
+				</section>
+				<section data-auto-animate>
+					<p>A ggplot <b>geom</b> is the geometrical object used to represent data (i.e. the chart type)</p>
+					<ul data-id="anim" class="fragment small">
+						<li>geom_bar()</li>
+						<li>geom_histogram()</li>
+						<li>geom_density()</li>
+						<li>geom_boxplot()</li>
+						<li>geom_violin()</li>
+						<li>geom_point()</li>
+						<li>geom_line()</li>
+					</ul>
+				</section>
+				<section>
+					<p>Other features can be controlled with additional <em>ggplot2</em> components</p>
+					<ul class="small">
+						<li>labels</li>
+						<li>scale</li>
+						<li>colours</li>
+						<li>best-fit lines</li>
+						<li>summary stats</li>
+						<li>axis range</li>
+						<li>...</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+							transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
