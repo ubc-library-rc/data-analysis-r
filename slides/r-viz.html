@@ -234,9 +234,9 @@ countries %>%
 					<pre data-id="code"><code data-trim data-line-numbers>
 countries %>%
   ggplot(aes(x=continent, fill=continent))+
-    geom_bar()
-	labs(title="Counts of observations by continent", 
-	x="Continents", y="# of observations")
+    geom_bar()+
+	labs(title="Counts of observations by continents", 
+	x="Continents", y="Number of observations")
 					</code></pre>
 					<img class="fragment" src="images/bar3.png"/>
 				</section>
@@ -277,7 +277,7 @@ countries %>%
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-							transition: 'none', // none/fade/slide/convex/concave/zoom
+							transition: 'slide', // none/fade/slide/convex/concave/zoom
 
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
