@@ -167,7 +167,7 @@ Main data types:
 * logical (TRUE or FALSE variable)
 
 
-Check current data format of the  `gender` variable
+Check current data format of the  `Age` variable
 ```{r}
 typeof(df$Age)
 ```
@@ -191,7 +191,7 @@ If you wanted to re-arrange the order of levels: "youth", "adult", "senior"
 ```{r}
 df$Age <- fct_relevel(df$Age, c("youth", "adult", "senior"))
 
-#Check levels for `gender`
+#Check levels for `Age`
 levels(df$Age)
 ```
 
