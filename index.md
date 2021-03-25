@@ -7,8 +7,8 @@ nav_order: 1
 
 This three-part workshop series will provide an introduction to data analysis and data visualization in R and R Studio. **R** is a popular free software program with many applications in both the humanities and sciences. **RStudio** is a set of integrated tools designed to help you be more productive with R.
 
-1. [**Introduction to R and RStudio**](intro-to-r/introduction.html) *(March 19, 2021)* 
-  - Do you want to learn about R but don't know where to start? This workshop is for you! R is a popular free software program with many applications in both the humanities and sciences. RStudio is a set of integrated tools designed to help you be more productive with R. This introductory level workshop introduces participants to R concepts, packages, and basic syntax using the RStudio environment. Register for [March 19 workshop](https://libcal.library.ubc.ca/event/3590291).
+1. [**Introduction to R and RStudio**](intro-to-r/introduction.html)  
+  - Do you want to learn about R but don't know where to start? This workshop is for you! R is a popular free software program with many applications in both the humanities and sciences. RStudio is a set of integrated tools designed to help you be more productive with R. This introductory level workshop introduces participants to R concepts, packages, and basic syntax using the RStudio environment.
 
 2. [**Visualization with R**](visualization/introduction.html) 
   - This workshop will introduce concepts and tools for visualizing data in R, with emphasis on the ggplot2 package. Participants are expected to be familiar with R and the RStudio environmnet (if you are new to R, consider attending Introduction to R and RStudio first). 
