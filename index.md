@@ -13,7 +13,7 @@ This three-part workshop series will provide an introduction to data analysis an
 2. [**Visualization with R**](visualization/introduction.html) 
   - This workshop will introduce concepts and tools for visualizing data in R, with emphasis on the ggplot2 package. Participants are expected to be familiar with R and the RStudio environmnet (if you are new to R, consider attending Introduction to R and RStudio first). 
 
-3. **Statistical analysis with R** *(April 16, 2021)*
+3. [**R for Statistical Analysis**](statistical-analysis/introduction.html)
   - Many state-of-the-art models and various graphs are available in R. This workshop covers data preparation and management, descriptive statistics, and common statistical analysis (T-test, ANOVA, correlation, regression). This workshop is for participants who already have a basic understanding of R. Register for [April 16 workshop](https://libcal.library.ubc.ca/event/3590376).
 
 ## Pre-workshop setup
