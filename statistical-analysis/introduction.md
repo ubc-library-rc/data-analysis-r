@@ -14,5 +14,3 @@ Contains code used during the workshop.
 - [R markdown file](r-stat-analysis.Rmd){:target="_blank"}
 - [R markdown file with answers](r-stat-analysis-w-answers.Rmd){:target="_blank"}
 
-### Workshop slides
-Slides for the introductory portion, in [HTML format](../slides/r-stat-analysis.html){:target="_blank"}
