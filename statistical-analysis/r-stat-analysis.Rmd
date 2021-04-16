@@ -7,34 +7,40 @@ output: html_document
 
 # Installing and loading R packages
 
-Install packages for statistical analysis
-```{r}
-install.packages("psych") # a statistical analysis package
-install.packages("rstatix") # a statistical analysis package
-install.packages("dplyr") # a data manipulation package
-install.packages("ggplot2") # a data visualization package
-install.packages("GGally") # a data visualization package (extension of ggplot2)
-install.packages("table1") # a package for creating summary tables
-install.packages("lmtest") # a package for linear regression
-install.packages("stargazer") # a package for exporting regression tables
-install.packages("car") # a package for regression analysis
-install.packages("RColorBrewer") # a color palette package
-```
+This workshop uses the following R packages: 
 
+- *psych*, a statistical analysis package
+- *rstatix*, a statistical analysis package
+- *dplyr*, a data manipulation package
+- *ggplot2*, a data visualization package
+- *GGally*, a data visualization package (extension of ggplot2)
+- *table1*, a package for creating summary tables
+- *lmtest*, a package for linear regression
+- *stargazer*, a package for exporting regression tables
+- *car*, a package for regression analysis
+- *RColorBrewer*, a color palette package
+
+
+Check whether required packages are already installed, and install any that are missing
+```{r}
+list.of.packages <- c("psych", "rstatix","dplyr","ggplot2","GGally","table1","lmtest","stargazer","car","RColorBrewer")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+```
 
 Load packages into your current session
 ```{r}
 suppressPackageStartupMessages({
-library(psych) # a statistical analysis package
-library(rstatix) # a statistical analysis package
-library(dplyr) # a data manipulation package
-library(ggplot2)  # a data visualization package
-library(GGally) # a data visualization package (extension of ggplot2)
-library(table1) # a package for creating summary tables
-library(lmtest) # a package for linear regression
-library(stargazer) # a package for exporting regression tables
-library(car) # a package for regression analysis
-library(RColorBrewer)}) # a color palette package 
+library(psych)
+library(rstatix)
+library(dplyr)
+library(ggplot2)
+library(GGally)
+library(table1)
+library(lmtest)
+library(stargazer)
+library(car)
+library(RColorBrewer)})
 ```
 
 

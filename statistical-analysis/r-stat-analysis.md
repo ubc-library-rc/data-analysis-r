@@ -203,34 +203,39 @@ summary {
 
 <div id="installing-and-loading-r-packages" class="section level1">
 <h1>Installing and loading R packages</h1>
-<p>Install packages for statistical analysis</p>
-<pre class="r"><code>#install.packages(&quot;psych&quot;) # a statistical analysis package
-#install.packages(&quot;rstatix&quot;) # a statistical analysis package
-#install.packages(&quot;dplyr&quot;) # a data manipulation package
-#install.packages(&quot;ggplot2&quot;) # a data visualization package
-#install.packages(&quot;GGally&quot;) # a data visualization package (extension of ggplot2)
-#install.packages(&quot;table1&quot;) # a package for creating summary tables
-#install.packages(&quot;lmtest&quot;) # a package for linear regression
-#install.packages(&quot;stargazer&quot;) # a package for exporting regression tables
-#install.packages(&quot;car&quot;) # a package for regression analysis
-#install.packages(&quot;RColorBrewer&quot;) # a color palette package</code></pre>
+<p>This workshop uses the following R packages:</p>
+<ul>
+<li><b>psych</b>, a statistical analysis package</li>
+<li><b>rstatix</b>, a statistical analysis package</li>
+<li><b>dplyr</b>, a data manipulation package</li>
+<li><b>ggplot2</b>, a data visualization package</li>
+<li><b>GGally</b>, a data visualization package (extension of ggplot2)</li>
+<li><b>table1</b>, a package for creating summary tables</li>
+<li><b>lmtest</b>, a package for linear regression</li>
+<li><b>stargazer</b>, a package for exporting regression tables</li>
+<li><b>car</b>, a package for regression analysis</li>
+<li><b>RColorBrewer</b>, a color palette package</li>
+</ul>
+
+<p>Check whether required packages are alread installed, and install any that are missing</p>
+
+<pre class="r"><code>list.of.packages <- c("psych", "rstatix","dplyr","ggplot2","GGally","table1","lmtest","stargazer","car","RColorBrewer")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+</code></pre>
 <p>Load packages into your current session</p>
 <pre class="r"><code>suppressPackageStartupMessages({
-library(psych) # a statistical analysis package
-library(rstatix) # a statistical analysis package
-library(dplyr) # a data manipulation package
-library(ggplot2)  # a data visualization package
-library(GGally) # a data visualization package (extension of ggplot2)
-library(table1) # a package for creating summary tables
-library(lmtest) # a package for linear regression
-library(stargazer) # a package for exporting regression tables
-library(car) # a package for regression analysis
-library(RColorBrewer)}) # a color palette package </code></pre>
-<pre><code>## Warning: package 'table1' was built under R version 4.0.5</code></pre>
-</div>
-<div id="changing-default-theme-for-visualizations" class="section level1">
-<h1>Changing default theme for visualizations</h1>
-<p>Changing the default theme to theme_light</p>
+library(psych) 
+library(rstatix) 
+library(dplyr) 
+library(ggplot2)  
+library(GGally) 
+library(table1) 
+library(lmtest) 
+library(stargazer) 
+library(car) 
+library(RColorBrewer)}) 
+</code></pre>
 </div>
 <div id="uploading-data" class="section level1">
 <h1>Uploading data</h1>
