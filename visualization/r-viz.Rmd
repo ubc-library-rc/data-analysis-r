@@ -1,25 +1,25 @@
 ---
 title: "Visualization with R workshop"
-author: "Jeremy Buhler and Albina Gibadullina"
-date: "February 28, 2021"
+author: "UBC Library Research Commons"
 output: html_document
 ---
 
 # Visualization in R
 
+
 ## Installing and loading packages
 
-Install R packages
+
+Check whether required packages are already installed, and install any that are missing
+
 ```{r}
-install.packages("dplyr")
-install.packages("gglot2")
-install.packages("gapminder")
-install.packages("forcats")
-install.packages("plotly")
-install.packages("viridis")
-install.packages("RColorBrewer")
-install.packages("ggsci")
+list.of.packages <- c("dplyr","ggplot2","gapminder","forcats","plotly","viridis","RColorBrewer","ggsci","report")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
 ```
+
+
 
 
 Load R packages

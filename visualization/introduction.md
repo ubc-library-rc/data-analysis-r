@@ -21,5 +21,5 @@ Slides for the introductory portion, in [HTML format](../slides/r-viz.html){:tar
 ### Selected _ggplot2_ resources
 The _ggplot2_ package is widely used for data visualization in R, and it is the foundation of this workshop. Here are a few resources to learn more about using _ggplot2_.
 
-- [Data Visualization with ggplot2 Cheat Sheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf){:target="_blank"} (PDF)
+- [Data Visualization with ggplot2 Cheat Sheet](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf){:target="_blank"} (PDF)
 - The [Learning ggplot2](https://ggplot2.tidyverse.org/#learning-ggplot2) section of the _ggplot2_ website lists other resources for different learning levels
