@@ -13,7 +13,7 @@ output: html_document
 Check whether required packages are already installed, and install any that are missing
 
 ```{r}
-list.of.packages <- c("dplyr","ggplot2","gapminder","forcats","plotly","viridis","RColorBrewer","ggsci","report")
+list.of.packages <- c("dplyr","ggplot2","gapminder","forcats","plotly","viridis","RColorBrewer","ggsci")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
