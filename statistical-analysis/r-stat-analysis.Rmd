@@ -29,7 +29,6 @@ Check whether required packages are already installed, and install any that are 
 list.of.packages <- c("psych", "rstatix","dplyr","DT","ggplot2","GGally","table1","lmtest","stargazer","car","RColorBrewer","remotes","report")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
-#remotes::install_github("easystats/report") # You only need to do that once
 ```
 
 Load packages into your current session
