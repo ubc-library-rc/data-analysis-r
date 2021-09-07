@@ -305,27 +305,6 @@ select(countries, -continent, -gdpPercap) # use subtraction operator
 ```
 
 
-### Filter function
-
-Filter data of countries from 1997 and with Oceania continent
-```{r}
-filter(countries, year==1997, continent=="Oceania")
-```
-
-
-Filter data of countries from 2007 and with gdpPercap greater than or equal to $40,000
-```{r}
-filter(countries, year==2007, gdpPercap>=40000)
-```
-
-
-Filter observations from year 2002 or year 2007
-```{r}
-filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
-```
-
-
-
 ### Arrange function
 
 Arrange countries based on life expectancy (from smallest to largest)
@@ -352,27 +331,23 @@ arrange(countries, year, desc(lifeExp))
 ```
 
 
-### Summarise function
+### Filter function
 
-Available sub-functions:
-
-* Center: mean(), median()
-* Spread: sd(), IQR(), mad()
-* Range: min(), max(), quantile()
-* Position: first(), last(), nth(),
-* Count: n(), n_distinct()
-* Logical: any(), all()
-
-
-Find average value of the lifeExp variable
+Filter data of countries from 1997 and with Oceania continent
 ```{r}
-summarise(countries, mean_lifeExp=mean(lifeExp))
+filter(countries, year==1997, continent=="Oceania")
 ```
 
 
-Find range of the lifeExp variable
+Filter data of countries from 2007 and with gdpPercap greater than or equal to $40,000
 ```{r}
-summarise(countries, range_lifeExp=max(lifeExp)-min(lifeExp))
+filter(countries, year==2007, gdpPercap>=40000)
+```
+
+
+Filter observations from year 2002 or year 2007
+```{r}
+filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
 ```
 
 
@@ -409,6 +384,30 @@ mutate(countries, decade=ifelse(year<1970,"Before 1970",
 Rename`pop` variable as `population`
 ```{r}
 rename(countries, population = pop)
+```
+
+
+### Summarise function
+
+Available sub-functions:
+
+* Center: mean(), median()
+* Spread: sd(), IQR(), mad()
+* Range: min(), max(), quantile()
+* Position: first(), last(), nth(),
+* Count: n(), n_distinct()
+* Logical: any(), all()
+
+
+Find average value of the lifeExp variable
+```{r}
+summarise(countries, mean_lifeExp=mean(lifeExp))
+```
+
+
+Find range of the lifeExp variable
+```{r}
+summarise(countries, range_lifeExp=max(lifeExp)-min(lifeExp))
 ```
 
 

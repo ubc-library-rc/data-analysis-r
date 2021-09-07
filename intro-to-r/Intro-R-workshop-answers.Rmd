@@ -299,28 +299,6 @@ Select all columns except for continent and gdpPercap
 select(countries, -continent, -gdpPercap) # use subtraction operator
 ```
 
-
-### Filter function
-
-Filter data of countries from 1997 and with Oceania continent
-```{r}
-filter(countries, year==1997, continent=="Oceania")
-```
-
-
-Filter data of countries from 2007 and with gdpPercap greater than or equal to $40,000
-```{r}
-filter(countries, year==2007, gdpPercap>=40000)
-```
-
-
-Filter observations from year 2002 or year 2007
-```{r}
-filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
-```
-
-
-
 ### Arrange function
 
 Arrange countries based on life expectancy (from smallest to largest)
@@ -347,27 +325,23 @@ arrange(countries, year, desc(lifeExp))
 ```
 
 
-### Summarise function
+### Filter function
 
-Available sub-functions:
-
-* Center: mean(), median()
-* Spread: sd(), IQR(), mad()
-* Range: min(), max(), quantile()
-* Position: first(), last(), nth(),
-* Count: n(), n_distinct()
-* Logical: any(), all()
-
-
-Find average value of the lifeExp variable
+Filter data of countries from 1997 and with Oceania continent
 ```{r}
-summarise(countries, mean_lifeExp=mean(lifeExp))
+filter(countries, year==1997, continent=="Oceania")
 ```
 
 
-Find range of the lifeExp variable
+Filter data of countries from 2007 and with gdpPercap greater than or equal to $40,000
 ```{r}
-summarise(countries, range_lifeExp=max(lifeExp)-min(lifeExp))
+filter(countries, year==2007, gdpPercap>=40000)
+```
+
+
+Filter observations from year 2002 or year 2007
+```{r}
+filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
 ```
 
 
@@ -409,6 +383,30 @@ rename(countries, population = pop)
 ```
 
 
+### Summarise function
+
+Available sub-functions:
+
+* Center: mean(), median()
+* Spread: sd(), IQR(), mad()
+* Range: min(), max(), quantile()
+* Position: first(), last(), nth(),
+* Count: n(), n_distinct()
+* Logical: any(), all()
+
+
+Find average value of the lifeExp variable
+```{r}
+summarise(countries, mean_lifeExp=mean(lifeExp))
+```
+
+
+Find range of the lifeExp variable
+```{r}
+summarise(countries, range_lifeExp=max(lifeExp)-min(lifeExp))
+```
+
+
 ## Piping with Multiple Functions
 
 What if you want to perform multiple functions in R? Use Pipe operator (%>%) in the dplyr package. It allows you to perform multiple functions without using nested parentheses. 
@@ -431,7 +429,6 @@ countries %>%
   group_by(continent) %>% 
   summarise(max_lifeExp=max(lifeExp))
 ```
-
 
 
 ### Example of Piping:
@@ -567,7 +564,6 @@ Save the dataframe as a csv file
 ```{r}
 write.csv(countries, file="countries.csv")
 ```
-
 
 
 ## Sources
