@@ -29,7 +29,6 @@ Check whether required packages are already installed, and install any that are 
 list.of.packages <- c("psych", "rstatix","dplyr","DT","ggplot2","GGally","table1","lmtest","stargazer","car","RColorBrewer","remotes","report")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
-#remotes::install_github("easystats/report") # You only need to do that once
 ```
 
 Load packages into your current session
@@ -300,7 +299,7 @@ scores %>%
 
 Run a Chi-square goodness of fit
 ```{r}
-m2 <- chisq.test(table(scores$gender), p = c(0.36,0.64))
+m2 <- chisq.test(table(scores$gender), p = c(0.5,0.5))
 m2
 ```
 
@@ -366,7 +365,7 @@ scores %>%
 
 Run one-way ANOVA:
 ```{r}
-m4 <- aov(scores$SATV ~ scores$education)
+m4 <- aov(SATV ~ education, data=scores)
 summary(m4)
 
 report(m4)
@@ -380,14 +379,20 @@ We do not have to run the post hoc tests because the group differences are not s
 
 Tukey's HSD is the most popular post hoc test for comparing multiple pairings:
 ```{r}
-Tukey_ANOVA_SATV_ed <- TukeyHSD(aov(scores$SATV ~ scores$education), conf.level=.95) 
+Tukey_ANOVA_SATV_ed <- TukeyHSD(aov(SATV ~ education, data=scores), conf.level=.95) 
 Tukey_ANOVA_SATV_ed
+```
+
+Optional: Some other commonly used post hoc tests are Bonferroni (more conservative) and Holm (less restrictive). Use `pairwise.t.test` for pairwise comparisons and indicate the adjustment method, e.g. `p.adj = "holm"`.
+
+```{r}
+pairwise.t.test(scores$SATV,scores$education,p.adj="holm")
 ```
 
 
 ## Two-way ANOVA
 
-It is used to determine whether there are group differences in numeric data between groups charachterized by two different categorical variables.
+It is used to determine whether there are group differences in numeric data between groups characterized by two different categorical variables.
 
 Do SAT verbal scores significantly differ by educational levels and gender?
 
@@ -404,7 +409,7 @@ scores %>%
 
 Run two-way ANOVA:
 ```{r}
-m5 <- aov(scores$SATV ~ scores$education+scores$gender)
+m5 <- aov(SATV ~ education+gender, data=scores)
 
 summary(m5)
 
@@ -467,7 +472,7 @@ ggplot(scores, aes(x=SATQ, y=SATV)) +
 
 Run a simple linear regression
 ```{r}
-model1 <- lm(scores$SATV ~ scores$SATQ)
+model1 <- lm(SATV ~ SATQ, data=scores)
 summary(model1)
 
 report(model1)
@@ -489,59 +494,6 @@ Overall:
 * 41.51% of the variability in the SAT verbal scores was explained by the SAT quantitative scores.
 
 
-### Check conditions/assumptions of linear regression
-
-* Normality of residuals: residual errors are assumed to be normally distributed.
-* Homoscedasticity of residuals variance: residuals are assumed to have a constant variance
-* Independence of residual error terms: residuals should be independent of each other.
-
-
-### Normality
-
-Normal Q-Q plot
-```{r}
-plot=plot(model1,2)
-```
-
-
-Checking for normality using Shapiro-Wilk test:
-```{r}
-shapiro.test(resid(model1))
-```
-p-values below 5% indicate non-normality of residuals
-
-
-### Homoscedasticity
-
-Plot positive values of residuals against fitted values
-```{r}
-plot=plot(model1,3)
-```
-
-
-Checking for heteroscedasticity using Breusch-Pagan Test
-```{r}
-bptest(model1)
-```
-p-values below 5% indicate heteroscedasticity of residuals
-
-
-### Independence
-
-Residuals vs Fitted plot
-```{r}
-plot=plot(model1,1)
-```
-
-
-Checking for auto-correlation using Durbin-Watson Test
-```{r}
-durbinWatsonTest(model1)
-```
-p-values below 5% indicate autocorrelation of residuals
-
-
-
 ## Multiple linear regression
 
 It is used to explain/predict one quantitative variable using multiple explanatory variables (one of which has to be quantitative).
@@ -558,7 +510,7 @@ scores %>%
 
 Run a multiple linear regression
 ```{r}
-model2 <- lm(scores$SATV ~ scores$SATQ +  scores$ACT)
+model2 <- lm(SATV ~ SATQ + ACT, data=scores)
 summary(model2)
 
 report(model2)
@@ -567,14 +519,9 @@ report(model2)
 
 ### Multicollinearity
 
-Check Variance Inflation Factor (VIF) for the severity of multicollinearity
-```{r}
-vif(model2)
-```
-VIF values above 4 - moderate multicollinearity; above 10 - strong multicollinearity
+Multicollinearity may occur when an independent variable is highly correlated (r >= 0.7) with one or more of the other independent variables in the model. 
 
-
-What if we wanted to include all of the variables in our dataset?
+What if we wanted to add more predictors to the model?
 ```{r}
 scores %>%
   ggpairs(ggplot2::aes(fill=gender),progress = F)+
@@ -582,50 +529,84 @@ scores %>%
 ```
 
 
-Run a multiple linear regression
+Check Variance Inflation Factor (VIF) for the severity of multicollinearity
 ```{r}
-scores$education <- as.numeric(scores$education)
-
-model3 <- lm(scores$SATV ~ scores$SATQ + scores$ACT + scores$age + scores$education + scores$gender)
-summary(model3)
-
-report(model3)
+vif(model2)
 ```
-
-
-T-tests for Beta1:
-
-* SATQ: p-value = 0.00% < 5% (reject the null) -> There is a linear relationship between SATQ and SATV scores. 
-* ACT: p-value = 0.00% < 5% (reject the null) -> There is a linear relationship between ACT and SATV scores. 
-* Age: p-value = 6.60% > 5% (fail to reject the null) -> There is no linear relationship between age and SATV scores.
-* Education: p-value = 72.08% > 5% (fail to reject the null) -> There is no linear relationship between education and SATV scores.
-* Gender: p-value = 1.42% < 5 % (reject the null) -> There is a linear relationship between gender and SATV scores. 
-
-ANOVA for Regression:
-
-* F-stat(5,681) = 122.8, p-value = 0.00% < 5% (reject the null)
-* The overall model is worthwhile.
-
-Overall:
-
-* The estimated regression line equation: SATV = 136.25 + 0.48(SATQ)+6.61(ACT)-0.74(Age)+0.97(Education)+16.56(Men).  
-* 47.41% of the variability in the SAT verbal scores was explained by the model as a whole.
+VIF values above 4 - moderate multicollinearity; above 10 - strong multicollinearity
 
 
 ## F-test for nested models
 
 Run F-test for comparing nested models
 ```{r}
-anova(model1,model2,model3)
+anova(model1,model2)
 ```
-p-value below 5% indicates that the new model is an improvement over the previous one
+
+p-value is below 5% (p<.001) which indicates that the new model is an improvement over the previous one (the coefficient for ACT is not a zero).
+
+
+### Check conditions/assumptions of linear regression
+
+* Normality of residuals: residual errors are assumed to be normally distributed.
+* Homoscedasticity of residuals variance: residuals are assumed to have a constant variance
+* Independence of residual error terms: residuals should be independent of each other.
+* Linearity: the relationship between predictors and outcome variable is assumed to be linear. 
+
+
+### Normality
+
+Normal Q-Q plot
+```{r}
+plot=plot(model2,2)
+```
+
+
+Checking for normality using Shapiro-Wilk test:
+```{r}
+shapiro.test(resid(model2))
+```
+p-values below 5% indicate non-normality of residuals
+
+
+### Homoscedasticity
+
+Plot positive values of residuals against fitted values
+```{r}
+plot=plot(model2,3)
+```
+
+
+Checking for heteroscedasticity using Breusch-Pagan Test
+```{r}
+bptest(model2)
+```
+p-values below 5% indicate heteroscedasticity of residuals
+
+
+### Independence and linearity
+
+Residuals vs Fitted plot to check if the observed pattern is linear
+```{r}
+plot=plot(model2,1)
+```
+
+
+Checking for auto-correlation using Durbin-Watson Test. 
+```{r}
+durbinWatsonTest(model2)
+```
+
+For the independent data, DW statistic is close to 2. DW < 1 or DW > 3 may indicate the presence of autocorrelation.  
+
+p-values below 5% indicate autocorrelation of residuals.
 
 
 ## Exporting regression results
 
 Use stargazer package to export regression results into your current working directory
 ```{r results='asis'}
-stargazer(model1,model2,model3,
+stargazer(model1,model2,
 type="html",
 out="Regression results.doc")
 ```
