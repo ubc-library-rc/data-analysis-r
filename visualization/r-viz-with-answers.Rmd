@@ -593,6 +593,32 @@ countries %>%
     scale_fill_jco()
 ```
 
+### Adding annotations to your graph
+
+Use `geom_hline` to add life expectancy in Canada as a reference line to your graph (replace for `geom_vline` for vertical lines):
+
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",x="Continent",y="Life expectancy")+
+    scale_fill_jco()+
+    geom_hline(color="red", yintercept=82.51) 
+  
+```
+
+Use `annotate` to add text to the line:
+
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",x="Continent",y="Life expectancy")+
+    scale_fill_jco()+
+    geom_hline(color="red", yintercept=82.51)+
+    annotate("text", x = "Americas", y = 84.51, label = "Canada 2020", color="red")
+  
+```
 
 ## Piping in ggplot
 

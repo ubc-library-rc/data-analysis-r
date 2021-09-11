@@ -1,25 +1,25 @@
 ---
 title: "Visualization with R workshop"
-author: "UBC Library Research Commons"
+author: "Jeremy Buhler and Albina Gibadullina"
+date: "February 28, 2021"
 output: html_document
 ---
 
 # Visualization in R
 
-
 ## Installing and loading packages
 
-
-Check whether required packages are already installed, and install any that are missing
-
+Install R packages
 ```{r}
-list.of.packages <- c("dplyr","ggplot2","gapminder","forcats","plotly","viridis","RColorBrewer","ggsci")
-new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
-
+install.packages("dplyr")
+install.packages("gglot2")
+install.packages("gapminder")
+install.packages("forcats")
+install.packages("plotly")
+install.packages("viridis")
+install.packages("RColorBrewer")
+install.packages("ggsci")
 ```
-
-
 
 
 Load R packages
@@ -419,13 +419,6 @@ countries %>%
 
 Add `facet_wrap`to create a small-multiple for each continent
 ```{r}
-countries %>%
-  ggplot(aes(x=gdpPercap, y=lifeExp))+
-    geom_point(aes(color=continent,size=pop), alpha=0.3)+
-    labs(title="Best-fit lines between gdpPercap(log10) and lifeExp for each continent",
-         x="Log 10 of GDP per capita", y="Life expectancy")+
-    scale_x_log10()+
-    geom_smooth(color="black",method="lm",se=FALSE)
 
 ```
 
@@ -436,14 +429,6 @@ Add `facet_grid`to create a small-multiple to compare continent between 1967 and
   -  Use `facet_grid`and make years rows and continents columns
 
 ```{r}
-countries %>%
-  filter(year==1967|year==2007) %>%
-    ggplot(aes(x=gdpPercap, y=lifeExp))+
-      geom_point(aes(color=continent,size=pop), alpha=0.3)+
-      labs(title="Best-fit lines between gdpPercap(log10) and lifeExp for each continent",
-           x="Log 10 of GDP per capita", y="Life expectancy")+
-      scale_x_log10()+
-      geom_smooth(color="black",method="lm",se=FALSE)
 
 ```
 
@@ -465,13 +450,6 @@ countries %>%
 
 Play around with a few themes - contrast and compare, let us know your favorite ones in the comments
 ```{r}
-countries %>%
-  ggplot(aes(x=gdpPercap, y=lifeExp))+
-    geom_point(aes(color=continent,size=pop), alpha=0.3)+
-    geom_smooth(aes(color=continent), method="lm",se=FALSE)+
-    scale_x_log10()+
-    labs(title="Best-fit lines between gdpPercap(log10) and lifeExp for each continent",
-         x="Log 10 of GDP per capita", y="Life expectancy")
 
 ```
 
@@ -586,13 +564,35 @@ Play around with different palettes - contrast and compare, let us know your fav
 
 Remember to use `fill` functions for box plot, bar plot, violin plot, dot plot
 ```{r}
-countries %>%
-  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
-    geom_violin()+
-    labs(title="Distribution of life expenctancy by continent",x="Continent",y="Life expectancy")
 
 ```
 
+### Adding annotations to your graph
+
+Use `geom_hline` to add life expectancy in Canada as a reference line to your graph (replace for `geom_vline` for vertical lines):
+
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",x="Continent",y="Life expectancy")+
+    scale_fill_jco()+
+    geom_hline(color="red", yintercept=82.51) 
+  
+```
+
+Use `annotate` to add text to the line:
+
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",x="Continent",y="Life expectancy")+
+    scale_fill_jco()+
+    geom_hline(color="red", yintercept=82.51)+
+    annotate("text", x = "Americas", y = 84.51, label = "Canada 2020", color="red")
+  
+```
 
 ## Piping in ggplot
 
