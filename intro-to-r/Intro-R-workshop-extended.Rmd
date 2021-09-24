@@ -1,4 +1,6 @@
 ---
+---
+---
 title: "Intro to R and RStudio Workshop (extended)"
 author: "Albina Gibadullina and Maria Laricheva"
 date: "September 24, 2021"
