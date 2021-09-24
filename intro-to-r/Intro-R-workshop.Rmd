@@ -1,6 +1,5 @@
 ---
 ---
-
 ---
 title: "Intro to R and RStudio Workshop"
 author: "Albina Gibadullina and Maria Laricheva"
