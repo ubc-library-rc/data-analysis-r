@@ -24,5 +24,5 @@ Do you want to learn about R but don't know where to start? This workshop is for
 The _ggplot2_ package is widely used for data visualization in R, and it is the foundation of this workshop. Here are a few resources to learn more about using _ggplot2_.
 
 - [Data Wrangling with dplyr and tidyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf){:target="_blank"} (PDF)
-- The [tidyverse](https://www.tidyverse.org/){:target="_blank"} collection of R packages
+- [Tidyverse collection of R packages](https://www.tidyverse.org/){:target="_blank"}
 - [R Markdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf){:target="_blank"} (PDF)
