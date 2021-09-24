@@ -1,10 +1,4 @@
 ---
-layout: default
-title: Markdown file
-nav_order: 5
----
-
----
 title: "Intro to R and RStudio Workshop"
 author: "Albina Gibadullina and Maria Laricheva"
 date: "September 24, 2021"
