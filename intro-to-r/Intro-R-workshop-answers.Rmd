@@ -1,0 +1,597 @@
+---
+title: "Intro to R Workshop (with answers)"
+author: "Albina Gibadullina and Maria Laricheva"
+date: "September 24, 2021"
+output: 
+  html_document:
+    theme: yeti
+    toc: true
+    toc_float: true
+---
+
+# Intro to R and RStudio
+
+## Installing and loading needed packages
+
+Install R packages
+```{r}
+#install.packages("tidyverse")
+#install.packages("gapminder")
+```
+
+Load R packages
+```{r warning = FALSE, message = FALSE, error = FALSE}
+library(tidyverse) # a collection of R packages designed for data science (e.g.dplyr, ggplot2, tidyr, forcats)
+library(gapminder) # a package with the gapminder dataset
+```
+
+
+## Manually inputting and/or modifying values
+
+### Creating new variables
+
+Assign values to variables
+```{r}
+a <- 4
+a
+b <- 5
+b
+```
+
+Create a new variable from existing variables
+```{r}
+c <- 6+a
+c
+d <- a + b + c
+d
+```
+
+See if two variables equal to one another
+```{r}
+c==d
+```
+
+See if two variables are not equal to one another
+```{r}
+c!=d
+```
+
+
+### Working with vectors
+
+Create a vector
+```{r}
+vec <- c(0, 1, 2, 3, 4, 5)
+vec
+```
+
+
+Select the first value of vec:
+```{r}
+vec[1]
+```
+
+
+And here is how you can modify it:
+```{r}
+vec[1] <- 1000
+vec
+```
+
+
+You can replace multiple values at once as long as the number of new values equals the number of selected values:
+```{r}
+vec[c(1, 3, 5)] <- c(-1, -2, -3)
+vec
+```
+
+Add +1 to column 4 to 6
+```{r}
+vec[4:6] <- vec[4:6] + 1
+vec
+```
+
+You can also create values that do not yet exist in your object. R will expand the object to accommodate the new values:
+```{r}
+vec[7] <- 10
+vec
+```
+
+
+### Working with data frames
+
+Create a data frame with four variables
+```{r}
+df <- data.frame(c("Anna","Patrick","John"),c(165,170,168),c(18000,45000,57000),c("youth","senior","adult"))
+names(df) <- c("Name","Height", "Income", "Age")
+df
+```
+
+
+Extract all rows, all colums
+```{r}
+df[,]
+```
+
+Extract first row and all columns
+```{r}
+df[1,]
+```
+
+Extract first two rows and all columns
+```{r}
+df[1:2,]
+```
+
+Extract first and third row and all columns
+```{r}
+df[c(1,3),]
+```
+
+Extract first row and second and third column
+```{r}
+df[1,2:3]
+```
+
+
+### Exercise #1
+
+Extract third column with all rows
+```{r}
+df[,3]
+```
+
+Extract element at 2nd row, 3rd column
+```{r}
+df[2,3]
+```
+
+Substitute element at 2nd row, 3rd column with 50000
+```{r}
+df[2,3] <- 50000
+df[2,3]
+```
+
+
+You can also extract values using variable names by adding `$` and variable name after the dataset name
+
+E.g. Extract the first two observations of the `Age` variable
+```{r}
+df$Age[1:2]
+```
+
+
+## Changing format of variables
+
+Main data types:
+
+* character (text/strings)
+* factor (categorical variable)
+* numeric (quantitative variable)
+* integer (quantitative variable, only integers)
+* logical (TRUE or FALSE variable)
+
+
+Check current data format of the  `Age` variable
+```{r}
+class(df$Age)
+```
+
+Change the format of `Age` from charachter to factor (categorical)
+```{r}
+df$Age <- as.factor(df$Age)
+```
+
+Check whether `Age` has factor format
+```{r}
+is.factor(df$Age)
+```
+
+Check levels for `Age`
+```{r}
+levels(df$Age)
+```
+
+If you wanted to re-arrange the order of levels: "youth", "adult", "senior"
+```{r}
+df$Age <- fct_relevel(df$Age, c("youth", "adult", "senior"))
+#Check levels for `gender`
+levels(df$Age)
+```
+
+### Commands to change data type:
+* as.numeric (quantitative, continious format) 
+* as.integer (quantitative, discrete format)
+* as.charachter (text format)
+* as.factor (categorical format)
+* as.logical (logical format: TRUE/FALSE)
+
+### Commands to check whether your data type is the following:
+* is.numeric (quantitative, continious format) 
+* is.integer (quantitative, discrete format)
+* is.charachter (text format)
+* is.factor (categorical format)
+* is.logical (logical format: TRUE/FALSE)
+
+
+## Importing data 
+
+### Importing data from external sources
+
+CSV data files
+```{r}
+#countries <- read.csv(file="countries.csv") # make sure the file is located in your working directory
+```
+
+
+SPSS, SAS, or Stata data file
+```{r}
+#install.packages("foreign")
+#library(foreign)
+#countries <- read.spss(file="countries.sav") # SPSS
+#countries <- read.dta(file="countries.dta") # Stata
+#countries <- read.ssd(file="countries.sas") # SAS
+```
+
+
+
+### Working with built-in datasets
+
+Check the description of the "gapminder" dataset
+```{r}
+#?gapminder
+```
+
+
+Import data from the built-in "gapminder" dataset
+```{r}
+countries <- gapminder # create a data frame
+head(countries) #see the first six rows of the dataframe 
+```
+
+
+## See the overview of data
+
+See the entire dataset
+```{r}
+View(countries)
+```
+
+
+Check the data structure
+```{r}
+str(countries)
+```
+
+Count the number of observations (measured by the number of rows) and the number of variables (measured by the number of columns)
+```{r}
+nrow(countries) #To check the number of rows
+ncol(countries) #To check the number of columns
+```
+
+
+Summarise the dataframe
+```{r}
+summary(countries)
+```
+
+Check if the dataframe is complete:
+
+Count the number of observations for each available year
+```{r}
+table(countries$year)
+```
+
+
+Count the number of observations in each continent for each available year 
+```{r}
+table(countries$continent, countries$year)
+```
+
+
+## Data Manipulation with `dplyr`
+
+
+### Select function
+
+Select specific columns such as country, year, lifeExp
+```{r}
+select(countries, country, year, lifeExp)
+```
+
+
+Select all columns except for continent and gdpPercap
+```{r}
+select(countries, -continent, -gdpPercap) # use subtraction operator
+```
+
+### Arrange function
+
+Arrange countries based on life expectancy (from smallest to largest)
+```{r}
+arrange(countries, lifeExp)
+```
+
+
+Arrange countries based on life expectancy (from smallest to largest), sorted first by year (from earliest year available to most recent)
+```{r}
+arrange(countries, year, lifeExp)
+```
+
+
+Arrange countries based on life expectancy (from largest to smallest)
+```{r}
+arrange(countries, desc(lifeExp))
+```
+
+
+Arrange countries based on life expectancy (from largest to smallest), sorted first by year (from earliest year available to most recent)
+```{r}
+arrange(countries, year, desc(lifeExp))
+```
+
+
+### Filter function
+
+Filter data of countries from 1997 and with Oceania continent
+```{r}
+filter(countries, year==1997, continent=="Oceania")
+```
+
+
+Filter data of countries from 2007 and with gdpPercap greater than or equal to $40,000
+```{r}
+filter(countries, year==2007, gdpPercap>=40000)
+```
+
+
+Filter observations from year 2002 or year 2007
+```{r}
+filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
+```
+
+
+### Mutate function
+
+Create a new variable called `GDP` (a product of `gdpPercap` and `pop`)
+```{r}
+mutate(countries, GDP=gdpPercap*pop)
+```
+
+
+#### Paste function
+
+Create a new variable called `country_year` using `paste` function
+```{r}
+mutate(countries, country_year=paste(country,year,sep = " "))
+```
+
+
+#### Replace and ifelse functions
+
+Create a dummy variable called `europe`
+```{r}
+mutate(countries, europe=replace(continent=="Europe",1,0))
+```
+
+Create a variable called `decade`
+```{r}
+mutate(countries, decade=ifelse(year<1970,"Before 1970",
+                         ifelse(year>=1970 & year <1990, "1970 to 1990","After 1990")))
+```
+
+
+### Rename function
+
+Rename`pop` variable as `population`
+```{r}
+rename(countries, population = pop)
+```
+
+
+### Summarise function
+
+Available sub-functions:
+
+* Center: mean(), median()
+* Spread: sd(), IQR(), mad()
+* Range: min(), max(), quantile()
+* Position: first(), last(), nth(),
+* Count: n(), n_distinct()
+* Logical: any(), all()
+
+
+Find average value of the lifeExp variable
+```{r}
+summarise(countries, mean_lifeExp=mean(lifeExp))
+```
+
+
+Find range of the lifeExp variable
+```{r}
+summarise(countries, range_lifeExp=max(lifeExp)-min(lifeExp))
+```
+
+
+### Piping with Multiple Functions
+
+What if you want to perform multiple functions in R? Use Pipe operator (%>%) in the dplyr package. It allows you to perform multiple functions without using nested parentheses. 
+
+
+This is how piping looks like:
+```{r}
+# DataFrame%>%
+    #function to execute first %>%
+        #function to execute second %>%
+            #function to execute third
+```
+
+
+#### Group_by function
+
+Group_by function allows you to do operations by groups. E.g. find maximum life expectancy by continent
+```{r}
+countries %>% 
+  group_by(continent) %>% 
+  summarise(max_lifeExp=max(lifeExp))
+```
+
+
+#### Example of Piping
+
+Finding average life expectancy in each continent in 2007
+
+* Select country, continent, year, lifeExp
+* Filter observations from 2007
+* Split data by continents
+* Summarise the mean life expectancy within each continent
+* Round the average life expectancy to 2 decimal points
+
+
+```{r}
+countries %>%
+  select(country, continent, year, lifeExp) %>% #select country, continent,  year, lifeExp
+    filter(year==2007) %>% #filter observations from 2007
+      group_by(continent) %>% # split data by continents
+          summarise(mean_lifeExp=mean(lifeExp)) %>% #summarise the mean life expectancy within each continent
+            mutate(mean_lifeExp=round(mean_lifeExp,2)) # Use mutate to modify existing variable, round mean weight to 2 decimal points
+```
+
+
+### Exercise #2
+
+Finding the average of GDP per Capita of Europen countries
+
+* Filter observations of European countries
+* Group by year
+* Summarize the mean gdpPercap
+* Save the new data frame as `gdp_Europe`
+
+Answers:
+```{r}
+gdp_Europe <- countries %>%
+  filter(continent=="Europe") %>%
+      group_by(year) %>%
+      summarise(mean_gdpPercap=mean(gdpPercap))
+gdp_Europe
+```
+
+
+## Combine data sets
+
+```{r}
+df1 <- data.frame(ID = 1:3,                      # Create first example data frame
+                  X1 = c("a1", "a2","a3"),
+                  stringsAsFactors = FALSE)
+df2 <- data.frame(ID = 2:4,                      # Create second example data frame
+                  X2 = c("b1", "b2","b3"),
+                  stringsAsFactors = FALSE)
+df1
+df2
+```
+
+
+Left_join: join matching rows from df2 to df1.
+```{r}
+left_join(df1, df2, by = "ID")
+```
+
+Right_join: join matching rows from df1 to df2
+```{r}
+right_join(df1, df2, by = "ID")
+```
+
+Inner_join: retain only rows in both sets
+```{r}
+inner_join(df1, df2, by = "ID")
+```
+
+Full_join: retain all values, all rows
+```{r}
+full_join(df1, df2, by = "ID")
+```
+
+
+## Working with missing data
+
+
+### Missing values
+
+NA denotes missing values: is.na() is used to test objects if they are NA
+```{r}
+x <- c(1, 2, NA, 5, 3)
+is.na(x)
+```
+
+
+### Removing NA Values
+
+A common task is to remove missing values (NAs)
+```{r}
+x <- c(1, 2, NA, 4, NA, 5)
+```
+
+Exclude vector with all the missing values
+```{r}
+x[!is.na(x)]
+```
+
+If you want to filter out all the missing values for a given variable from a df
+```{r}
+#df %>% 
+  #filter(!is.na(variable))
+```
+
+Example of excluding missing values in a df
+```{r}
+# Create a df with missing values from a previous example
+df <- full_join(df1, df2, by = "ID")
+
+# Exclude observations when X1 is NA
+df %>% 
+  filter(!is.na(X1))
+```
+
+
+What if there are multiple things and you want to take the subset with no missing values?
+```{r}
+x <- c(1, 2, NA, 4, NA, 5)
+y <- c("a", NA, "b", "d", NA, "f")
+```
+
+Leave values that are not missing for both x and y
+```{r}
+good <- complete.cases(x, y)
+x[good]
+y[good]
+```
+
+Using `complete.case` to filter out NA values from a df
+```{r}
+df %>% 
+  filter(complete.cases(X1,X2))
+```
+
+
+## Making tables look nice in a Markdown file
+
+Use `datatable` function provided by `DT` package
+```{r}
+#install.packages("DT")
+library(DT)
+datatable(countries)
+```
+
+
+## Exporting dataframes
+
+Save the dataframe as a csv file
+```{r}
+write.csv(countries, file="countries.csv")
+```
+
+
+## Sources
+
+* https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti 
+* https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
