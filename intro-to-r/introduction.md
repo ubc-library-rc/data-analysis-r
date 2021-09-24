@@ -24,3 +24,4 @@ Do you want to learn about R but don't know where to start? This workshop is for
 - [Data Wrangling with dplyr and tidyr Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf){:target="_blank"} (PDF)
 - [Tidyverse collection of R packages](https://www.tidyverse.org/){:target="_blank"}
 - [R Markdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf){:target="_blank"} (PDF)
+- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
