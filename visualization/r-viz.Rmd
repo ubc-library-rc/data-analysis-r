@@ -1,0 +1,850 @@
+---
+---
+
+---
+title: "Visualization with R workshop"
+author: "Jeremy Buhler and Albina Gibadullina"
+date: "October 8, 2021"
+output:
+  html_document:
+    theme: yeti
+    toc: yes
+    toc_float: yes
+---
+
+# Installing and loading packages
+
+Install R packages
+```{r}
+install.packages("tidyverse")
+install.packages("gapminder")
+install.packages("ggridges")
+install.packages("ggrepel")
+install.packages("viridis")
+install.packages("RColorBrewer")
+install.packages("ggsci")
+install.packages("plotly")
+install.packages("gganimate")
+install.packages("gifski")
+```
+
+
+Load R packages
+```{r warning = FALSE, message = FALSE}
+library(tidyverse) # a collection of data manipulation and visualization packages
+library(gapminder) # package with a gapminder dataset
+library(ggridges) # extension of ggplot2 that makes ridgeline plots
+library(ggrepel) # extension of ggplot2 that makes non-overlapping labels
+library(viridis) # color palette package
+library(RColorBrewer) # color palette package
+library(ggsci) # color palette package
+library(plotly) # package for interactive data visualizations
+library(gganimate) # package for producing gifs, extension of ggplot2
+library(gifski) # package for converting video frames to GIF animations
+```
+
+
+# Preparing the data
+
+Import data from the built-in "gapminder" dataset
+```{r}
+countries <- gapminder # create a data frame
+head(countries) #see the first six rows of the dataframe
+```
+
+
+Check the data structure
+```{r}
+str(countries)
+```
+
+
+# Data manipulation with `dplyr`
+
+## Filter function
+
+Filter data of countries from 1997 and with Oceania continent
+```{r}
+filter(countries, year==1997 & continent=="Oceania") # Use "&" for AND condition
+```
+
+
+Filter observations from year 2002 or year 2007
+```{r}
+filter(countries, year==2002 | year==2007) # Use "|" for OR condition
+```
+
+
+## Summarise function
+
+Available sub-functions:
+
+* Center: mean(), median()
+* Spread: sd(), IQR(), mad()
+* Range: min(), max(), quantile()
+* Position: first(), last(), nth(),
+* Count: n(), n_distinct()
+* Logical: any(), all()
+
+
+Find average value of the lifeExp variable
+```{r}
+summarise(countries, mean_lifeExp=mean(lifeExp))
+```
+
+
+## Piping with multiple functions
+
+What if you want to perform multiple functions in R? Use Pipe operator (%>%) in the dplyr package. It allows you to perform multiple functions without using nested parentheses.
+
+
+This is how piping looks:
+```{r}
+# DataFrame%>%
+    #function to execute first %>%
+        #function to execute second %>%
+            #function to execute third
+```
+
+
+## Group_by function
+
+Group_by function allows you to do operations by groups. E.g. find maximum life expectancy by continent
+```{r}
+countries %>%
+  group_by(continent) %>%
+  summarise(max_lifeExp=max(lifeExp))
+```
+
+
+# Data visualization with `ggplot2`
+
+## Barchart
+
+Shows the distribution of a categorical variable
+```{r}
+countries %>%
+  ggplot(aes(x=continent))+
+    geom_bar()
+```
+
+
+Add unique colour to each continent using fill function
+```{r}
+countries %>%
+  ggplot(aes(x=continent, fill=continent))+
+    geom_bar()
+```
+
+
+Add title, subtitle, x and y labels, and caption
+```{r}
+countries %>%
+  ggplot(aes(x=continent, fill=continent))+
+    geom_bar()+
+    labs(title="Distribution of observations by continents", 
+         subtitle = "Measured as counts", 
+         x="Continents",
+         y="Number of observations",
+         caption = "Source: Gapminder data")
+```
+
+
+Make a relative barchart by modifying y-values to measure the percentage of observations
+```{r}
+countries %>%
+  ggplot(aes(x=continent, fill=continent))+
+    geom_bar(aes(y=stat(count)/sum(count)))+
+    labs(title="Data distribution by continents", 
+         x="Continents",
+         y="Percent of observations")
+```
+
+
+Remove legend using `guides` command
+```{r}
+countries %>%
+  ggplot(aes(x=continent, fill=continent))+
+    geom_bar(aes(y=stat(count)/sum(count)))+
+    labs(title="Data distribution by continents", 
+         x="Continents",
+         y="Percent of observations")+
+    guides(fill = "none")
+```
+
+
+## Histograms
+
+Visualizes the distribution of one quantitative variable
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp))+
+    geom_histogram()+
+    labs(title="Histogram of life expenctancy ", 
+         x="Life expectancy",
+         y="Number of observations")
+```
+
+
+Use light-blue fill color with a black border
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp))+
+    geom_histogram(color="black", fill="lightblue")+
+    labs(title="Histogram of life expenctancy ", 
+         x="Life expectancy",
+         y="Number of observations")
+```
+
+
+Change bin-width from 2 to 4
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp))+
+    geom_histogram(binwidth=4, color="black", fill="lightblue")+
+    labs(title="Histogram of life expenctancy ", 
+         x="Life expectancy",
+         y="Number of observations")
+```
+
+
+Make a relative histogram by adding `y=..density..` (remember to change titles)
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp,y=..density..))+
+    geom_histogram(binwidth=4, color="black", fill="lightblue")+
+    labs(title="Relative histogram of life expenctancy ", 
+         x="Life expectancy",
+         y="Percent of observations")
+```
+
+
+## Density plots
+
+
+Visualizes the distribution of a quantitative variable
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp))+
+    geom_density()+
+    labs(title="Density plot of life expenctancy", 
+         x="Life expectancy")
+```
+
+
+Use pink fill color with a thicker border (size = 1)
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp))+
+    geom_density(size=1, fill="pink")+
+    labs(title="Density plot of life expenctancy ", 
+         x="Life expectancy")
+```
+
+
+Contrasting lifeExp distributions of continents using density plots
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp, fill=continent))+
+    geom_density()+
+    labs(title="Density plot of life expenctancy by continent ", 
+         x="Life expectancy")
+```
+
+
+Change alpha to make it more transparent, alpha measures color saturation (0 to 1)
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp, fill=continent))+
+    geom_density(alpha=0.3)+
+    labs(title="Density plot of life expenctancy by continent ", 
+         x="Life expectancy")
+```
+
+
+Or make a ridgeline plot using`geom_density_ridges` function (from `ggridges` package)
+```{r}
+countries %>%
+  ggplot(aes(x=lifeExp, y=continent, fill=continent))+
+    geom_density_ridges(alpha=0.7)+
+    labs(title="Distribution of life expenctancy by continent ", 
+         x="Life expectancy")
+```
+
+
+## Boxplots
+
+Boxplots are used to compare distributions of one quantitative variable across multiple categories (a visualization alternative to density plots)
+
+
+Make a boxplot of life expectancy
+```{r}
+countries %>%
+  ggplot(aes(y=lifeExp))+
+    geom_boxplot()+
+    labs(title="Boxplots of life expenctancy",
+         y="Life expectancy")
+```
+
+
+Comparing distribution of lifeExp variable by continent
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp))+
+    geom_boxplot()+
+    labs(title="Boxplots of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")
+```
+
+
+Add unique colour to each continent
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_boxplot()+ 
+    labs(title="Boxplots of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")
+```
+
+
+Reorder continents from smallest to highest life expectancy
+```{r}
+countries %>%
+  ggplot(aes(x=reorder(continent,lifeExp), y=lifeExp, fill=continent))+
+    geom_boxplot()+
+    labs(title="Boxplots of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")
+```
+
+
+Change the name of your legend title to "Continent"
+```{r}
+countries %>%
+  ggplot(aes(x=reorder(continent,lifeExp), y=lifeExp, fill=continent))+
+    geom_boxplot()+
+    labs(title="Boxplots of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy",
+         fill="Continent")
+```
+
+
+Add average life expectancy values to each boxplot
+```{r}
+countries %>%
+  ggplot(aes(x=reorder(continent,lifeExp), y=lifeExp, fill=continent))+
+    geom_boxplot()+
+    labs(title="Boxplots of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy",
+         fill="Continent")+
+    stat_summary(fun=mean, geom="point", shape=5, size=4)
+```
+
+
+## Violin charts
+
+Make a violin chart of life expectancy grouped by continent
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent", 
+         y="Life expectancy")
+```
+
+Add observations to violin plots using `geom_jitter`
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    geom_jitter(alpha=0.2, width=0.3)+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent", 
+         y="Life expectancy")
+```
+
+
+## Small multiples
+
+### `facet_wrap` function
+
+Usinf `facet_wrap` function to break down each violin chart by year
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent", 
+         y="Life expectancy")+
+    facet_wrap(~year)
+```
+
+
+### `facet_grid` function
+
+Stacking charts into columns with `facet_grid`
+```{r}
+countries %>%
+  filter(year==1967 | year==2007) %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent", 
+         y="Life expectancy")+
+    facet_grid(.~year)
+```
+
+
+Stacking charts into rows with `facet_grid`
+```{r}
+countries %>%
+  filter(year==1967 | year==2007) %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent", 
+         y="Life expectancy")+
+    facet_grid(year~.)
+```
+
+
+## Scatterplots
+
+
+Scatterplots show the relationship between two quantitative variables
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point()+
+    labs(title="Scatterplot of GDP per capita and life expectancy", 
+         x="GDP per capita", 
+         y="Life expectancy")
+```
+
+
+Add color to represent different continents
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent))+
+    labs(title="Scatterplot of GDP per capita and life expectancy", 
+         x="GDP per capita", 
+         y="Life expectancy")
+```
+
+
+Change the size of data points to measure the size of population
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent, size=pop))+
+    labs(title="Scatterplot of GDP per capita and life expectancy", 
+         x="GDP per capita", 
+         y="Life expectancy")
+```
+
+
+### Transforming x and y values
+
+Transform the gdpPercap variable using a `scale_x_log10()`
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent,size=pop))+
+    labs(title="Scatterplot of GDP per capita and life expectancy", 
+         x="Log 10 of GDP per capita", 
+         y="Life expectancy")+
+    scale_x_log10()
+```
+
+
+Specify ranges for x and y values using `xlim` and `ylim` functions
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent,size=pop))+
+    labs(title="Scatterplot of GDP per capita and life expectancy", 
+         x="Log 10 of GDP per capita", 
+         y="Life expectancy")+
+    scale_x_log10()+
+    xlim(1000,10000)+
+    ylim(50,70)
+```
+
+
+### Best fit lines
+
+Add a best fit line to the scatterplot
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent,size=pop))+
+    labs(title="Scatterplot of GDP per capita and life expectancy", 
+         x="Log 10 of GDP per capita", 
+         y="Life expectancy")+
+    scale_x_log10()+
+    geom_smooth(method="lm", se=FALSE)
+```
+
+
+Add a best fit line for each continent and reduce saturation for points
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent,size=pop), alpha=0.3)+
+    labs(title="Scatterplot of GDP per capita and life expectancy", 
+         x="Log 10 of GDP per capita", 
+         y="Life expectancy")+
+    scale_x_log10()+
+    geom_smooth(aes(color=continent),method="lm", se=FALSE)
+```
+
+
+### Exercise #1a
+
+Add `facet_wrap`to create a small-multiple for each continent
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent,size=pop), alpha=0.3)+
+    labs(title="Best-fit lines between gdpPercap(log10) and lifeExp for each continent",
+         x="Log 10 of GDP per capita", 
+         y="Life expectancy")+
+    scale_x_log10()+
+    geom_smooth(color="black",method="lm",se=FALSE)
+
+```
+
+### Exercise #1b
+
+Add `facet_grid`to create a small-multiple to compare continent between 1967 and 2007
+
+  -  Use `facet_grid`and make years rows and continents columns
+  
+```{r}
+countries %>%
+  filter(year==1967|year==2007) %>%
+    ggplot(aes(x=gdpPercap, y=lifeExp))+
+      geom_point(aes(color=continent,size=pop), alpha=0.3)+
+      labs(title="Best-fit lines between gdpPercap(log10) and lifeExp for each continent",
+           x="Log 10 of GDP per capita", 
+           y="Life expectancy")+
+      scale_x_log10()+
+      geom_smooth(color="black",method="lm",se=FALSE)
+
+```
+
+## Labels
+
+Use `geom_text` function to add labels your observations
+```{r}
+countries %>%
+  filter(year==2007, continent=="Europe") %>%
+    ggplot(aes(x=gdpPercap, y=lifeExp))+
+      geom_point(aes(size=pop), color="blue", alpha=0.3)+
+      geom_text(aes(label=country), size = 3)+
+      labs(title="GDP per capita and life expectancy in Europe in 2007",
+           x="GDP per capita", 
+           y="Life expectancy")
+```
+
+Use `geom_text_repel` function (from `ggrepel` package) to make sure labels do not overlap
+```{r}
+countries %>%
+  filter(year==2007, continent=="Europe") %>%
+    ggplot(aes(x=gdpPercap, y=lifeExp))+
+      geom_point(aes(size=pop), color="blue", alpha=0.3)+
+      geom_text_repel(aes(label=country), size = 3)+
+      labs(title="GDP per capita and life expectancy in Europe in 2007",
+           x="GDP per capita", 
+           y="Life expectancy")
+```
+
+## Themes
+
+  - `theme_gray()` - the signature ggplot2 theme with a grey background and white gridlines, designed to put the data forward yet make comparisons easy.
+  - `theme_bw()` - the classic dark-on-light ggplot2 theme. May work better for presentations displayed with a projector.
+  - `theme_linedraw()` - a theme with only black lines of various widths on white backgrounds, reminiscent of a line drawing. Serves a purpose similar to theme_bw. Note that this theme has some very thin lines (<< 1 pt) which some journals may refuse.
+  - `theme_light()` - a  theme similar to theme_linedraw but with light grey lines and axes, to direct more attention towards the data.
+  - `theme_dark()` - the dark cousin of theme_light, with similar line sizes but a dark background. Useful to make thin coloured lines pop out.
+  - `theme_minimal()` - a minimalistic theme with no background annotations.
+  - `theme_classic()` - a classic-looking theme, with x and y axis lines and no gridlines.
+  - `theme()` - create your own theme by modifying theme components, see https://ggplot2.tidyverse.org/reference/theme.html
+
+
+### Exercise #2
+
+Play around with a few themes - contrast and compare, let us know your favorite ones in the comments
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent,size=pop), alpha=0.3)+
+    geom_smooth(aes(color=continent), method="lm",se=FALSE)+
+    scale_x_log10()+
+    labs(title="Best-fit lines between gdpPercap(log10) and lifeExp for each continent",
+         x="Log 10 of GDP per capita", 
+         y="Life expectancy")
+
+```
+
+
+### Modify graphs with`theme()`
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent,size=pop), alpha=0.3)+
+    geom_smooth(aes(color=continent), method="lm",se=FALSE)+
+    scale_x_log10()+
+    labs(title="Best-fit lines between gdpPercap(log10) and lifeExp for each continent",
+         x="Log 10 of GDP per capita", 
+         y="Life expectancy")+
+    theme_light()+
+    theme( # change font size, font, and color for x-axis title
+      axis.title.x=element_text(size=20, family="serif", face="italic", color="red"))
+```
+
+
+
+## Colors
+
+
+### Set ggplot color manually
+
+Use `scale_fill_manual()` for box plot, bar plot, violin plot, dot plot, etc
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")+
+    scale_fill_manual(values = c("#FFDB6D","#D16103","#52854C","#4E84C4","#293352"))
+```
+
+
+Use `scale_color_manual()` for lines and points
+```{r}
+countries %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+    geom_point(aes(color=continent,size=pop), alpha=0.3)+
+    geom_smooth(aes(color=continent), method="lm",se=FALSE)+
+    scale_x_log10()+
+    labs(title="Best-fit lines between gdpPercap(log10) and lifeExp for each continent",
+         x="Log 10 of GDP per capita", 
+         y="Life expectancy")+
+    scale_color_manual(values = c("#FFDB6D","#D16103","#52854C","#4E84C4","#293352"))
+```
+
+
+### Viridis color palettes
+
+The viridis R package provides color palettes to make beautiful plots that are: printer-friendly, perceptually uniform and easy to read by those with colorblindness.
+
+  - Use `scale_fill_viridis()` for box plot, bar plot, violin plot, dot plot
+  - Use `scale_color_viridis()` for lines and points
+  
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")+
+    scale_fill_viridis(discrete = TRUE)
+```
+
+
+### Rcolorbrewer palettes
+
+RColorBrewer is an R package that contains a ready-to-use color palettes for creating beautiful graphics:
+
+  - Sequential palettes (first list of colors), which are suited to ordered data that progress from low to high (gradient)
+  - Qualitative palettes (second list of colors), which are best suited to represent nominal or categorical data
+  - Diverging palettes (third list of colors), which put equal emphasis on mid-range critical values and extremes at both ends of the data range
+
+
+Display available palettes
+```{r}
+display.brewer.all()
+```
+
+
+Display only colorblind-friendly brewer palettes
+```{r}
+display.brewer.all(colorblindFriendly = TRUE)
+```
+
+
+Which type of color palette is appropriate to visualize continents?
+
+  - Use `scale_fill_brewer()` for box plot, bar plot, violin plot, dot plot
+  - Use `scale_color_brewer()` for lines and points
+  
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")+
+    scale_fill_brewer(palette = "Set2")
+```
+
+
+### Grey color scales
+
+  - Use `scale_fill_grey()` for box plot, bar plot, violin plot, dot plot
+  - Use `scale_color_grey()` for lines and points
+  
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")+
+    scale_fill_grey(start = 1, end = 0.2) # ranges from 0 (black) to 1 (white)
+```
+
+
+### Scientific journal color palettes
+
+The R package ggsci contains a collection of high-quality color palettes inspired by colors used in scientific journals, data visualization libraries, and more.
+
+- scale_color_npg() and scale_fill_npg(): Nature Publishing Group color palettes
+- scale_color_aaas() and scale_fill_aaas(): American Association for the Advancement of Science color palettes
+- scale_color_lancet() and scale_fill_lancet(): Lancet journal color palettes
+- scale_color_jco() and scale_fill_jco(): Journal of Clinical Oncology color palettes
+- scale_color_tron() and scale_fill_tron(): This palette is inspired by the colors used in Tron Legacy. It is suitable for displaying data when using a dark theme.
+
+
+### Exercise #3
+
+Play around with different palettes - contrast and compare, let us know your favorite ones in the comments
+
+Remember to use `fill` functions for box plot, bar plot, violin plot, dot plot
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")
+
+```
+
+
+## Annotations
+
+Use `geom_hline` to add life expectancy in Canada as a reference line to your graph (replace for `geom_vline` for vertical lines):
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")+
+    geom_hline(color="red", yintercept=82.51)
+```
+
+Use `annotate` to add text and point to the line:
+```{r}
+countries %>%
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+    geom_violin()+
+    labs(title="Distribution of life expenctancy by continent",
+         x="Continent",
+         y="Life expectancy")+
+    geom_hline(color="red", yintercept=82.51)+
+    annotate("text", x = "Americas", y = 85.51, label = "Canada 2020", color="red")+
+    annotate("point",x = "Americas", y = 82.51, color="black")
+```
+
+
+## Piping in `ggplot2`
+
+Visualize changes in annual average life expectancy by continent with points representing the size of populations
+```{r}
+lifeExp_continent <- countries %>%
+    group_by(continent, year) %>%
+      summarise(lifeExp=mean(lifeExp), pop=sum(pop)) %>%
+        ggplot(aes(x=year, y=lifeExp, color=continent))+
+          geom_point(aes(size=pop))+
+          labs(title="Annual average life expectancy by continent", 
+               y="Life expectancy")+
+          geom_line()
+
+lifeExp_continent
+```
+
+
+## Save produced graphs
+
+Use `ggsave` function to save the plot in your working directory
+```{r}
+ggsave("lifeExp_continent.png", plot = lifeExp_continent, device="png", width = 8, height = 5)
+```
+
+
+# Interactive visualizations
+
+## `ggplotly`
+
+Make an interactive plotly scatterplot of life expectancy and GDP per capita in 2007
+```{r}
+plot1 <- countries %>%
+  filter(year==2007) %>%
+    ggplot(aes(x=gdpPercap, y=lifeExp))+
+      geom_point(aes(size=pop, color=continent, label=country))+
+      labs(title="Life expectancy and GDP per capita, 2007",
+           x="Log 10 of GDP per capita", 
+           y="Life expectancy")+
+      scale_x_log10()+
+      geom_smooth(aes(color=continent), method="lm", se=FALSE)
+ggplotly(plot1)
+```
+
+
+Add year as a frame so that we can see changes over time
+```{r}
+plot2 <- countries %>%
+    ggplot(aes(x=gdpPercap, y=lifeExp, frame=year))+
+      geom_point(aes(color=continent, size=pop,label=country))+
+      geom_smooth(aes(color=continent), method="lm",se=FALSE)+
+      scale_x_log10()+
+      labs(title="Life exp. and GDP per capita, 1952-2007",
+           x="Log 10 of GDP per capita", 
+           y="Life expectancy")
+ggplotly(plot2)
+```
+
+Note: You can make any static `ggplot2` graph interactive with `plotly`
+
+
+## `gganimate`
+
+Create an animation using `transition_time` function + show historical traces by adding `shadow_wake` function
+```{r}
+gif_countries <- countries %>%
+    ggplot(aes(x=gdpPercap, y=lifeExp))+
+      geom_point(aes(color=continent, size=pop,label=country))+
+      scale_x_log10()+
+      transition_time(year)+
+      shadow_wake(wake_length = 0.1)+
+      labs(title="Life expectancy and GDP per capita in {frame_time}",
+           x="Log 10 of GDP per capita", 
+           y="Life expectancy")
+
+gif_countries
+```
+
+
+Save animation using `anim_save` function
+```{r}
+anim_save("countries.gif", animation = gif_countries, path = NULL)
+```
