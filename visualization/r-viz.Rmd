@@ -3,7 +3,7 @@
 
 ---
 title: "Visualization with R workshop"
-author: "Jeremy Buhler and Albina Gibadullina"
+author: "Albina Gibadullina and Maria Laricheva"
 date: "October 8, 2021"
 output:
   html_document:
