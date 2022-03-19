@@ -6,7 +6,7 @@ has_children: true
 has_toc: false
 ---
 
-# R Shiny
+# Interactive Web Apps with Shiny
 
 This workshop will provide an introduction to developing interactive visualizations and dashboards using Shiny - a package for making web applications in R. Participants are expected to be familiar with R and the RStudio environment.
 
