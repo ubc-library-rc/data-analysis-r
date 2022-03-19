@@ -5,7 +5,7 @@ nav_order: 1
 ---
 # Data Analysis in R
 
-This three-part workshop series will provide an introduction to data analysis and data visualization in R and R Studio. **R** is a popular free software program with many applications in both the humanities and sciences. **RStudio** is a set of integrated tools designed to help you be more productive with R.
+This four-part workshop series will provide an introduction to data analysis and data visualization in R and R Studio. **R** is a popular free software program with many applications in both the humanities and sciences. **RStudio** is a set of integrated tools designed to help you be more productive with R.
 
 1. [**Introduction to R and RStudio**](intro-to-r/introduction.html)  
   - Do you want to learn about R but don't know where to start? This workshop is for you! R is a popular free software program with many applications in both the humanities and sciences. RStudio is a set of integrated tools designed to help you be more productive with R. This introductory level workshop introduces participants to R concepts, packages, and basic syntax using the RStudio environment.
@@ -15,6 +15,9 @@ This three-part workshop series will provide an introduction to data analysis an
 
 3. [**R for Statistical Analysis**](statistical-analysis/introduction.html)
   - Many state-of-the-art models and various graphs are available in R. This workshop covers data preparation and management, descriptive statistics, and common statistical analysis (T-test, ANOVA, correlation, regression). This workshop is for participants who already have a basic understanding of R. 
+
+4. [**R Shiny**](shiny/introduction.html)
+  - This workshop will provide an introduction to developing interactive visualizations and dashboards using Shiny - a package for making web applications in R. This workshop is for participants who already have a basic understanding of visualization in R (consider attending Visualization with R workshop first). 
 
 ## Pre-workshop setup
 To participate fully you will need to install the latest versions of R and RStudio on your computer ahead of time.
