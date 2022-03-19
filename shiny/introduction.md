@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Interactive Web-apps with Shiny
+title: Web Apps with R Shiny
 nav_order: 8
 has_children: true
 has_toc: false
