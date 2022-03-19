@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Interactive web-apps with Shiny
+title: Interactive Web-apps with Shiny
 nav_order: 8
 has_children: true
 has_toc: false
