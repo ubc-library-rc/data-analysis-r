@@ -12,8 +12,10 @@ This workshop will provide an introduction to developing interactive visualizati
 
 ### R markdown file
 Contains code used during the workshop.
-- [R markdown file](r-viz.Rmd){:target="_blank"}
-- [R markdown file with answers](r-viz-with-answers.Rmd){:target="_blank"}
+- [Exercise app](../exercise/app.R){:target="_blank"}
+- [Skeleton of a simple app](../skeleton/app.R){:target="_blank"}
+- [Simple app (complete)](../simple/app.R){:target="_blank"}
+- [Complex app](../complex/app.R){:target="_blank"}
 
 ### Workshop slides
 Slides for the introductory portion, in [HTML format](../slides/r-viz.html){:target="_blank"}
