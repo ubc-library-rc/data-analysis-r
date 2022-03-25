@@ -12,10 +12,10 @@ This workshop will provide an introduction to developing interactive visualizati
 
 ### R markdown file
 Contains code used during the workshop.
-- [Exercise app](../exercise/app.R){:target="_blank"}
-- [Skeleton of a simple app](../skeleton/app.R){:target="_blank"}
-- [Simple app (complete)](../simple/app.R){:target="_blank"}
-- [Complex app](../complex/app.R){:target="_blank"}
+- [Exercise app](exercise/app.R){:target="_blank"}
+- [Skeleton of a simple app](skeleton/app.R){:target="_blank"}
+- [Simple app (complete)](simple/app.R){:target="_blank"}
+- [Complex app](complex/app.R){:target="_blank"}
 
 ### Workshop slides
 Slides for the introductory portion, in [HTML format](../slides/r-viz.html){:target="_blank"}
