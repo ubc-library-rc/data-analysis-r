@@ -29,3 +29,5 @@ The _shiny_ package is widely used for data visualization in R, and it is the fo
 
 ### Shiny apps
  - [Link to a complex shiny app](http://206.12.92.126:8838/gapminder/)
+
+&lt;iframe height="400" width="100%" frameborder="no" src="https://datasciencegenie.shinyapps.io/MyShinyApp/"> &lt;/iframe>
