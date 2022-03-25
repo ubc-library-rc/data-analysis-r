@@ -28,3 +28,10 @@ The _shiny_ package is widely used for data visualization in R, and it is the fo
 Shiny app
 knitr::include_app("http://206.12.92.126:8838/gapminder/",
   height = "600px")
+  
+\let\ooldhref\href
+\let\href\oldhref
+```{r miniUI, fig.cap='A Shiny app created via the miniUI package; you can see a live version at https://yihui.shinyapps.io/miniUI/.', screenshot.opts=list(delay=20,zoom=2), dev='png', cache=TRUE, fig.align='center', fig.width=8, fig.height=6}
+knitr::include_app('https://yihui.shinyapps.io/miniUI/', height = '600px')
+```
+\let\href\ooldhref
