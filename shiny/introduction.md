@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Web Apps with R Shiny
+title: Web Apps with Shiny
 nav_order: 8
 has_children: true
 has_toc: false
