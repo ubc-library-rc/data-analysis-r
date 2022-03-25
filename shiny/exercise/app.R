@@ -9,6 +9,7 @@
 
 library(shiny)
 library(gapminder)
+library(tidyverse)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
