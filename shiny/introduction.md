@@ -23,3 +23,7 @@ The _shiny_ package is widely used for data visualization in R, and it is the fo
 
 - [Data Visualization with ggplot2 Cheat Sheet](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf){:target="_blank"} (PDF)
 - The [Learning ggplot2](https://ggplot2.tidyverse.org/#learning-ggplot2) section of the _ggplot2_ website lists other resources for different learning levels
+
+
+Shiny app
+<iframe height="400" width="100%" frameborder="no" src="http://206.12.92.126:8838/gapminder/"> </iframe>
