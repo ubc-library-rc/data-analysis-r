@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+---
+layout: default
+title: Gapminder web app
+nav_order: 9
+parent: Web Apps with Shiny
+---
 
 <html>
 
