@@ -26,4 +26,5 @@ The _shiny_ package is widely used for data visualization in R, and it is the fo
 
 
 Shiny app
-<iframe height="400" width="100%" frameborder="no" src="http://206.12.92.126:8838/gapminder/"> </iframe>
+knitr::include_app("http://206.12.92.126:8838/gapminder/",
+  height = "600px")
