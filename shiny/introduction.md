@@ -25,13 +25,5 @@ The _shiny_ package is widely used for data visualization in R, and it is the fo
 - The [Learning ggplot2](https://ggplot2.tidyverse.org/#learning-ggplot2) section of the _ggplot2_ website lists other resources for different learning levels
 
 
-Shiny app
-knitr::include_app("http://206.12.92.126:8838/gapminder/",
-  height = "600px")
-  
-\let\ooldhref\href
-\let\href\oldhref
-```{r miniUI, fig.cap='A Shiny app created via the miniUI package; you can see a live version at https://yihui.shinyapps.io/miniUI/.', screenshot.opts=list(delay=20,zoom=2), dev='png', cache=TRUE, fig.align='center', fig.width=8, fig.height=6}
-knitr::include_app('https://yihui.shinyapps.io/miniUI/', height = '600px')
-```
-\let\href\ooldhref
+### Shiny apps
+ - [Link to a complex shiny app](http://206.12.92.126:8838/gapminder/)
