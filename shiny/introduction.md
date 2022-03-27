@@ -25,7 +25,7 @@ _Shiny_ is a widely used package in R for building interactive web applications,
 
 - [Main shiny website](https://shiny.rstudio.com/)
 - [Gallery of shiny apps](https://shiny.rstudio.com/gallery/)
-- [Mastering Shiny oper-source textbook](https://mastering-shiny.org/)
+- [_Mastering Shiny_ oper-source textbook](https://mastering-shiny.org/)
 - [Official Shiny video tutorials](https://shiny.rstudio.com/tutorial/)
 - [Additional Shiny tutorials](https://rstudio-education.github.io/shiny-course/)
 
