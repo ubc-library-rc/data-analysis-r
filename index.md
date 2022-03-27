@@ -16,7 +16,7 @@ This four-part workshop series will provide an introduction to data analysis and
 3. [**R for Statistical Analysis**](statistical-analysis/introduction.html)
   - Many state-of-the-art models and various graphs are available in R. This workshop covers data preparation and management, descriptive statistics, and common statistical analysis (T-test, ANOVA, correlation, regression). This workshop is for participants who already have a basic understanding of R. 
 
-4. [**Web Apps with R Shiny**](shiny/introduction.html)
+4. [**Web Apps with Shiny**](shiny/introduction.html)
   - This workshop will provide an introduction to developing interactive visualizations and dashboards using Shiny - a package for making web applications in R. This workshop is for participants who already have a basic understanding of visualization in R (consider attending Visualization with R workshop first). 
 
 ## Pre-workshop setup
