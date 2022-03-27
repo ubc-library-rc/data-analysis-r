@@ -18,17 +18,13 @@ Contains code used during the workshop.
 - [Complex app](complex/app.R){:target="_blank"}
 
 ### Workshop slides
-Slides for the introductory portion, in [pdf format](r-shiny-slides.pdf){:target="_blank"}
+Slides for the introductory portion, in [pdf format](slides/r-shiny-slides.pdf){:target="_blank"}
 
 ### Selected _shiny_ resources
 _Shiny_ is a widely used package in R for building interactive web applications, and it is the foundation of this workshop. Here are a few resources to learn more about using _shiny_:
 
-- [Main shiny website](https://shiny.rstudio.com/)
+- [Main website](https://shiny.rstudio.com/)
 - [Gallery of shiny apps](https://shiny.rstudio.com/gallery/)
 - [_Mastering Shiny_ oper-source textbook](https://mastering-shiny.org/)
 - [Official Shiny video tutorials](https://shiny.rstudio.com/tutorial/)
 - [Additional Shiny tutorials](https://rstudio-education.github.io/shiny-course/)
-
-
-### Gapminder shiny app
- - [Link to a complex shiny app](http://206.12.92.126:8838/gapminder/)
