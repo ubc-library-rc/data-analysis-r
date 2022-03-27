@@ -23,7 +23,7 @@ Slides for the introductory portion, in [pdf format](slides/r-shiny-slides.pdf){
 ### Selected _shiny_ resources
 _Shiny_ is a widely used package in R for building interactive web applications, and it is the foundation of this workshop. Here are a few resources to learn more about using _shiny_:
 
-- [Main website](https://shiny.rstudio.com/){:target="_blank"}
+- [Offical website](https://shiny.rstudio.com/){:target="_blank"}
 - [Gallery of shiny apps](https://shiny.rstudio.com/gallery/){:target="_blank"}
 - [_Mastering Shiny_ oper-source textbook](https://mastering-shiny.org/){:target="_blank"}
 - [Official Shiny video tutorials](https://shiny.rstudio.com/tutorial/){:target="_blank"}
