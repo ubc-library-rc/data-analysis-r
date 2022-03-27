@@ -18,7 +18,7 @@ Contains code used during the workshop.
 - [Complex app](complex/app.R)
 
 ### Workshop slides
-Slides for the introductory portion, in [pdf format](slides/r-shiny-slides.pdf){:target="_blank"}
+Slides for the introductory portion, in [pdf format](slides/r-shiny-slides.pdf){:target="_blank"}.
 
 ### Selected _shiny_ resources
 _Shiny_ is a widely used package in R for building interactive web applications, and it is the foundation of this workshop. Here are a few resources to learn more about using _shiny_:
