@@ -413,9 +413,7 @@ server <- function(input, output, session) {
   
 
   output$downloadData <- downloadHandler(
-    filename = function() {
-      paste("gapminder_filtered", ".csv", sep = "")
-    },
+    filename = "gapminder_filtered.csv",
     content = function(file) {
       write.csv(dataset_filtered() %>% 
                 select(!!!input$variables), file, row.names = FALSE)
