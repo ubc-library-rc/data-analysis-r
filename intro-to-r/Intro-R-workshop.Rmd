@@ -553,7 +553,7 @@ x <- c(1, 2, NA, 4, NA, 5)
 
 Exclude vector with all the missing values
 ```{r}
-x[!is.na(x)]
+x[!is.na(x)] # the exclamation mark here means not true
 ```
 
 If you want to filter out all the missing values for a given variable from a df
