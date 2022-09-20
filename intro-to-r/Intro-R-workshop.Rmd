@@ -366,6 +366,13 @@ Filter observations from year 2002 or year 2007
 filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
 ```
 
+#### Exercise #2
+
+How to filter out observations from year 2002 or 2007?
+Answers:
+```{r}
+
+```
 
 ### Mutate function
 
@@ -474,7 +481,7 @@ countries %>%
 ```
 
 
-### Exercise #2
+### Exercise #3
 
 Finding the average of GDP per Capita of Europen countries
 
