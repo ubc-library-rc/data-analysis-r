@@ -105,7 +105,10 @@ vec
 
 Create a data frame with four variables
 ```{r}
-df <- data.frame(c("Anna","Patrick","John"),c(165,170,168),c(18000,45000,57000),c("youth","senior","adult"))
+df <- data.frame(c("Anna","Patrick","John"),
+c(165,170,168),
+c(18000,45000,57000),
+c("youth","senior","adult"))
 names(df) <- c("Name","Height", "Income", "Age")
 df
 ```
@@ -215,27 +218,10 @@ levels(df$Age)
 * is.factor (categorical format)
 * is.logical (logical format: TRUE/FALSE)
 
-
-## Importing data 
-
-### Importing data from external sources
-
-CSV data files
-```{r}
-#countries <- read.csv(file="countries.csv") # make sure the file is located in your working directory
-```
+### Why data type matters?
 
 
-SPSS, SAS, or Stata data file
-```{r}
-#install.packages("foreign")
-#library(foreign)
-#countries <- read.spss(file="countries.sav") # SPSS
-#countries <- read.dta(file="countries.dta") # Stata
-#countries <- read.ssd(file="countries.sas") # SAS
-```
-
-
+## Importing/Exporting data 
 
 ### Working with built-in datasets
 
@@ -250,6 +236,34 @@ Import data from the built-in "gapminder" dataset
 countries <- gapminder # create a data frame
 head(countries) #see the first six rows of the dataframe 
 ```
+
+Save the dataframe as a csv file
+```{r}
+write.csv(countries, file="countries.csv")
+```
+
+Look at the working directory
+```
+getwd()
+```
+
+### Importing data from external sources
+
+CSV data files
+```{r}
+countries <- read.csv(file="countries.csv") # make sure the file is located in your working directory
+```
+
+
+SPSS, SAS, or Stata data file
+```{r}
+#install.packages("foreign")
+#library(foreign)
+#countries <- read.spss(file="countries.sav") # SPSS
+#countries <- read.dta(file="countries.dta") # Stata
+#countries <- read.ssd(file="countries.sas") # SAS
+```
+
 
 
 ## See the overview of data
@@ -578,14 +592,6 @@ Use `datatable` function provided by `DT` package
 #install.packages("DT")
 library(DT)
 datatable(countries)
-```
-
-
-## Exporting dataframes
-
-Save the dataframe as a csv file
-```{r}
-write.csv(countries, file="countries.csv")
 ```
 
 
