@@ -592,6 +592,11 @@ df %>%
   filter(complete.cases(X1,X2))
 ```
 
+If you have numerous columns and wanna avoid listing all column names
+```{r}
+df %>% 
+  filter(complete.cases(df))
+```
 
 ## Making tables look nice in a Markdown file
 
