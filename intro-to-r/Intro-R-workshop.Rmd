@@ -400,7 +400,8 @@ mutate(countries, europe=replace(continent=="Europe",1,0))
 Create a variable called `decade`
 ```{r}
 mutate(countries, decade=ifelse(year<1970,"Before 1970",
-                         ifelse(year>=1970 & year <1990, "1970 to 1990","After 1990")))
+                         ifelse(year>=1970 & year <=1990, "1970 to 1990",
+                         "After 1990")))
 ```
 
 
