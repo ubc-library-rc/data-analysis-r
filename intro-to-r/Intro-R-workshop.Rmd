@@ -106,9 +106,9 @@ vec
 Create a data frame with four variables
 ```{r}
 df <- data.frame(c("Anna","Patrick","John"),
-c(165,170,168),
-c(18000,45000,57000),
-c("youth","senior","adult"))
+                 c(165,170,168),
+                 c(18000,45000,57000),
+                 c("youth","senior","adult"))
 names(df) <- c("Name","Height", "Income", "Age")
 df
 ```
@@ -200,7 +200,6 @@ levels(df$Age)
 If you wanted to re-arrange the order of levels: "youth", "adult", "senior"
 ```{r}
 df$Age <- fct_relevel(df$Age, c("youth", "adult", "senior"))
-#Check levels for `gender`
 levels(df$Age)
 ```
 
@@ -220,6 +219,26 @@ levels(df$Age)
 
 ### Why data type matters?
 
+#### exercise 2
+
+Run the following block to draw a pie chart, and see if you can discover anything that does not make sense, try to fix the pie chart.
+
+```{r}
+canada.oil <- data.frame(c("Oil", "Natural gas", "Hydro", "Nuclear", "Coal", "Others"),
+                         c("31", "28", "26", "7", "6", "2"))
+names(canada.oil) <- c("type","percentage")
+
+canada.oil %>% 
+  ggplot(aes(x = "", y = percentage, fill = type)) + 
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start = 0) +
+  scale_fill_brewer(palette = "Set2") +
+  theme_void() +
+  labs(title = "Canadian Production of Energy by Source in Percentage, 2015",
+       fill = "Source of Energy Production") +
+  geom_text(aes(label = percentage),
+            position = position_stack(vjust = 0.5))
+```
 
 ## Importing and exporting data 
 
