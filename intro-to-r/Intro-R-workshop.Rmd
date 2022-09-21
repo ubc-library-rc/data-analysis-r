@@ -221,7 +221,7 @@ levels(df$Age)
 ### Why data type matters?
 
 
-## Importing/Exporting data 
+## Importing and exporting data 
 
 ### Working with built-in datasets
 
