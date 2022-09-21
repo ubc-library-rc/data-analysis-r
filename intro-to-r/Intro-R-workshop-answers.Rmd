@@ -4,7 +4,7 @@
 ---
 title: "Intro to R and RStudio Workshop"
 author: "Albina Gibadullina and Maria Laricheva"
-date: "September 24, 2021"
+date: "Updated September 21, 2022"
 output: 
   html_document:
     theme: yeti
@@ -88,7 +88,7 @@ vec[c(1, 3, 5)] <- c(-1, -2, -3)
 vec
 ```
 
-Add +1 to column 4 to 6
+Add +1 to the 4th to 6th values
 ```{r}
 vec[4:6] <- vec[4:6] + 1
 vec
@@ -105,7 +105,10 @@ vec
 
 Create a data frame with four variables
 ```{r}
-df <- data.frame(c("Anna","Patrick","John"),c(165,170,168),c(18000,45000,57000),c("youth","senior","adult"))
+df <- data.frame(c("Anna","Patrick","John"),
+                 c(165,170,168),
+                 c(18000,45000,57000),
+                 c("youth","senior","adult"))
 names(df) <- c("Name","Height", "Income", "Age")
 df
 ```
@@ -198,7 +201,6 @@ levels(df$Age)
 If you wanted to re-arrange the order of levels: "youth", "adult", "senior"
 ```{r}
 df$Age <- fct_relevel(df$Age, c("youth", "adult", "senior"))
-#Check levels for `gender`
 levels(df$Age)
 ```
 
@@ -216,27 +218,34 @@ levels(df$Age)
 * is.factor (categorical format)
 * is.logical (logical format: TRUE/FALSE)
 
+### Why data type matters?
 
-## Importing data 
+#### exercise #2
 
-### Importing data from external sources
+Run the following block to draw a pie chart, and see if you can discover anything that does not make sense, try to fix the pie chart.
 
-CSV data files
 ```{r}
-#countries <- read.csv(file="countries.csv") # make sure the file is located in your working directory
+canada.oil <- data.frame(c("Oil", "Natural gas", "Hydro", "Nuclear", "Coal", "Others"),
+                         c("31", "28", "26", "7", "6", "2"))
+names(canada.oil) <- c("type","percentage")
+
+# solution
+canada.oil$percentage <- as.numeric(canada.oil$percentage)
+
+canada.oil %>% 
+  ggplot(aes(x = "", y = percentage, fill = type)) + 
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start = 0) +
+  scale_fill_brewer(palette = "Set2") +
+  theme_void() +
+  labs(title = "Canadian Production of Energy by Source in Percentage, 2015",
+       fill = "Source of Energy Production") +
+  geom_text(aes(label = percentage),
+            position = position_stack(vjust = 0.5))
 ```
 
 
-SPSS, SAS, or Stata data file
-```{r}
-#install.packages("foreign")
-#library(foreign)
-#countries <- read.spss(file="countries.sav") # SPSS
-#countries <- read.dta(file="countries.dta") # Stata
-#countries <- read.ssd(file="countries.sas") # SAS
-```
-
-
+## Importing and exporting data 
 
 ### Working with built-in datasets
 
@@ -250,6 +259,33 @@ Import data from the built-in "gapminder" dataset
 ```{r}
 countries <- gapminder # create a data frame
 head(countries) #see the first six rows of the dataframe 
+```
+
+Save the dataframe as a csv file
+```{r}
+write.csv(countries, file="countries.csv")
+```
+
+Look at the working directory
+```{r}
+getwd()
+```
+
+### Importing data from external sources
+
+CSV data files
+```{r}
+countries <- read.csv(file="countries.csv") # make sure the file is located in your working directory
+```
+
+
+SPSS, SAS, or Stata data file
+```{r}
+#install.packages("foreign")
+#library(foreign)
+#countries <- read.spss(file="countries.sav") # SPSS
+#countries <- read.dta(file="countries.dta") # Stata
+#countries <- read.ssd(file="countries.sas") # SAS
 ```
 
 
@@ -351,6 +387,14 @@ filter(countries, year==2007, gdpPercap>=40000)
 Filter observations from year 2002 or year 2007
 ```{r}
 filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
+```
+
+#### Exercise #3
+
+How to filter out observations from year 2002 or 2007?
+Answers:
+```{r}
+filter(countries, year!=2002 & year!=2007) # Use & for And condition
 ```
 
 
@@ -461,7 +505,7 @@ countries %>%
 ```
 
 
-### Exercise #2
+### Exercise #4
 
 Finding the average of GDP per Capita of Europen countries
 
