@@ -4,7 +4,7 @@
 ---
 title: "Intro to R and RStudio Workshop"
 author: "Albina Gibadullina and Maria Laricheva"
-date: "September 24, 2021"
+date: "Updated September 21, 2022"
 output: 
   html_document:
     theme: yeti
@@ -219,7 +219,7 @@ levels(df$Age)
 
 ### Why data type matters?
 
-#### exercise 2
+#### exercise #2
 
 Run the following block to draw a pie chart, and see if you can discover anything that does not make sense, try to fix the pie chart.
 
@@ -385,7 +385,7 @@ Filter observations from year 2002 or year 2007
 filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
 ```
 
-#### Exercise #2
+#### Exercise #3
 
 How to filter out observations from year 2002 or 2007?
 Answers:
@@ -501,7 +501,7 @@ countries %>%
 ```
 
 
-### Exercise #3
+### Exercise #4
 
 Finding the average of GDP per Capita of Europen countries
 
