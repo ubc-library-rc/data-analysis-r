@@ -219,7 +219,7 @@ levels(df$Age)
 
 ### Why data type matters?
 
-#### exercise #2
+#### Exercise #2
 
 Run the following block to draw a pie chart, and see if you can discover anything that does not make sense, try to fix the pie chart.
 
