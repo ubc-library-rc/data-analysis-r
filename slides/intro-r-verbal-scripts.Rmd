@@ -1,7 +1,7 @@
 # waiting and [pre-workshop setup](https://ubc-library-rc.github.io/data-analysis-r/#pre-workshop-setup)
 Hello, this is <ins>presenter name</ins>. I'm the presenter today. We are going to get started in just a few minutes. We're expecting about <ins>number of registration</ins> folks today. Thank you so much.
 
-Before getting started, we'd like everyone to take the time to make sure that you have R and RStudio installed on your computer. 
+Before getting started, we'd like everyone to take the time to make sure that you **have R and RStudio installed** on your computer. 
 - If you haven't, the link to the web page I am sharing now is on the chat. Please click on the link to visit the web page and follow the instructions to download and install R and RStudio.
 - If you have already installed them. That's great. You may also click on the link and take a look at the other content on this page. You can see from the left panel of the page that this page is actually the overview of the Data Analysis in R workshop series. Scroll up a bit and you can see the four workshops. Click on the name of the workshop will take you to the subpage of each workshop which contains the materials such as slides, R markdown files and some resources. We will work on the intro part today. The main material we will use is the R markdown file shown here, you may download and preview it.
 
@@ -45,7 +45,7 @@ We assume you have already installed R and RStudio on your computer. That's the 
 However, if you haven't installed them. No worries, it's fine. You may just watch my screen, and try it on later by yourself. You will have access to all the materials needed.
 
 ## [R](https://ubc-library-rc.github.io/data-analysis-r/slides/intro-r-studio.html#/7)
-R is a programming language developed by statisticians for data analysis. Let's <ins>open R</ins> together to have a look at its interface.
+R is a programming language developed by statisticians for data analysis. Let's **open R** together to have a look at its interface.
 
 It has several attactive features,
 1. It's free and open source. Whenever you open it, there is an description shown automatically in the R console, telling you the version, copyrght, platform and free.
@@ -57,7 +57,7 @@ R Studio makes it easier to work with R. [R vs RStudio:](https://mgimond.github.
 - R is the actual programming language. It’s the workhorse. Without R installed on your computer or server, you would not be able to run any R commands.
 - RStudio is a convenient interface in which to use R. It’s sometimes referred to as an Integrated Development Environment (IDE). RStuio is not needed if you feel comfortable working with R directly.
 
-Once again, let's <ins>open RStudio</ins> together to have a look at its interface. When you start RStudio for the first time, you will see three panes. 
+Once again, let's **open RStudio** together to have a look at its interface. When you start RStudio for the first time, you will see three panes. 
 - The left pane shows the R console. The same as the console we saw in R. It's where to execute the code and give the results.
 - On the right, the top pane includes tabs such as Environment and History. The Environment tab allows you to see what objects are in the workspace. The History tab allows you to see the commands that you have entered. 
 - The bottom pane shows tabs such as File, Plots, Packages and Help. We will introduce those panes later along the way.
@@ -68,8 +68,8 @@ You can also create a R Markdown file. Once a markdown file is created, you can 
 
 ## [R Markdown](https://ubc-library-rc.github.io/data-analysis-r/slides/intro-r-studio.html#/9)
 R Markdown is a specific type of file format designed to produce documents that include both code and text/narratives are in the same document. 
-- Although ou can also put text as annotation in R script with a # sign,  R Markdown allows results to be automatically generated from the source code. For example, if you click on the run button here, the results show just beneath the code. Let's just **minimize R console** to increase visibility. It shows repetitive information of the code executed and the results.
-- Besides, R Markdown supports dozens of static and dynamic/interactive output formats. For example, if you click Knit here, you can render it as html, pdf, or word document. 
+- Although ou can also put text as annotation in R script with a # sign,  R Markdown allows results to be automatically generated from the source code. For example, if you click on the **run** button here (keyboard shortcuts are available, refer to the drop-down menu on run in the upper right corner of the pane), the results show just beneath the code. Let's just **minimize R console** to increase visibility. It shows repetitive information of the code executed and the results.
+- Besides, R Markdown supports dozens of static and dynamic/interactive output formats. For example, if you click **Knit** here, you can render it as html, pdf, or word document, etc. 
 
 From now on, we will work on the R markdown file prepared for the intro R workshop. Up to now, do you have any questions?
 
