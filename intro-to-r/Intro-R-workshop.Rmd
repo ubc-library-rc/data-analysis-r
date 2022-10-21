@@ -14,24 +14,31 @@ output:
 
 # Intro to R and RStudio
 
-## Installing and loading needed packages
+## Work directory
 
-Install R packages
-```{r}
-#install.packages("tidyverse")
-#install.packages("gapminder")
-```
+When you have put the file in your target folder and open it with RStudio, you can click on `Session - Set Working Directory - To Source File Location`, to set your working directory. It is just a file path on your computer that sets the default location of any files you read into R, or save out of R.
 
-Load R packages
+Check working directory
 ```{r}
-library(tidyverse) # a collection of R packages designed for data science (e.g.dplyr, ggplot2, tidyr, forcats)
-library(gapminder) # a package with the gapminder dataset
+getwd()
 ```
 
 
-## Manually inputting and/or modifying values
+## Operators
 
-### Creating new variables
+|   Operators   |   Description          | 
+|:-------------:|:----------------------:|
+|`    <-       `|   assignment           |
+|`    +        `|   addition             |
+|`    -        `|   subtraction          |
+|`    *        `|   multiplication       |
+|`    /        `|   division             |
+|`    <=       `|   less than or equal to|
+|`    ==       `|   exactly equal to     |
+|`    !=       `|   not equal to         |
+|`    !        `|   Not                  |
+|`    |        `|   OR                   |
+|`    &        `|   AND                  |
 
 Assign values to variables
 ```{r}
@@ -43,7 +50,7 @@ b
 
 Create a new variable from existing variables
 ```{r}
-c <- 6+a
+c <- 6 + a
 c
 d <- a + b + c
 d
@@ -51,38 +58,125 @@ d
 
 See if two variables equal to one another
 ```{r}
-c==d
+c == d
 ```
 
 See if two variables are not equal to one another
 ```{r}
-c!=d
+c != d
+```
+
+All the objects are visible on the Environment pane in the top right.
+
+
+## Types of data
+
+* numeric (quantitative, with decimal points)
+* integer (quantitative, only integers)
+* logical (TRUE or FALSE)
+* character (text/strings)
+* factor (categorical variable) -- skip, introduce later
+
+Check the type of data using function `class()`
+```{r}
+class(a)
+class(b)
+class(c)
+class(d)
+```
+
+Characters are surrounded by quotation marks `'` or `"` in R
+```{r}
+e <- "a"
+class(e)
 ```
 
 
-### Working with vectors
+## Types of R-objects
 
-Create a vector
+Objects are the instance of the class. Almost everything is an object. There are many types of R-objects. 
+
+* Vector
+* Matrix
+* Data Frame
+* Array
+* List
+
+
+### Object: vector
+
+Vectors are the simplest data structures in R. They are element(s) of the same basic type. In R, the more complicated data structures are made with vectors as building-blocks. The object a, b, c, d, e that we created can be seen as a vector of a single element.
+
+Create a vector of multiple elements by `c()` and elements within the bracket are separated by a comma `,`
 ```{r}
 vec <- c(0, 1, 2, 3, 4, 5)
 vec
 ```
 
+Colon ':' simplify the procedure of retrieving consecutive numbers
+```{r}
+vec1 <- 0:5
+vec1
+```
 
-Select the first value of vec:
+Create a vector from existing objects
+```{r}
+vec2 <- c(vec, vec1) # binding vectors
+vec2
+```
+
+
+##### Exercise #1
+
+Why are `vec3` and `vec4` different?
+```{r}
+vec3 <- c(a, b, c, d)
+vec3
+
+vec4 <- c('a', 'b', 'c', 'd')
+vec4
+```
+
+How do you check the type of data of the elements in `vec3` and `vec4`?
+```{r}
+
+```
+
+What if you bind `vec3` and `vec4` together and assign the outcome into a new vector called `vec5`? Will `vec5` contain different types of data?
+```{r}
+
+```
+
+
+#### Vector indexing
+
+Since there are multiple elements in a vector. Sometimes you need to select one or several elements from a vector. Selection is done by a square bracket `[]` with an indexing number within it. Indexing in R starts from 1 (different from Python, which starts from 0).
+
+Select the first value of `vec`:
 ```{r}
 vec[1]
 ```
 
+Select the first three values of `vec`:
+```{r}
+vec[1:3]
+```
 
-And here is how you can modify it:
+Now we can have a closes check of whether `vec5` contains different types of data. 
+```{r}
+class(vec5[1:4])
+class(vec5[5:8])
+```
+
+We select elements from `vec5` to check their type of data. Sometime, we may want to change its values. Here is some examples of how to modify the value of certain element(s).
+
+Modify an element in the vector:
 ```{r}
 vec[1] <- 1000
 vec
 ```
 
-
-You can replace multiple values at once as long as the number of new values equals the number of selected values:
+Replace multiple values at once as long as the number of new values equals the number of selected values:
 ```{r}
 vec[c(1, 3, 5)] <- c(-1, -2, -3)
 vec
@@ -101,9 +195,107 @@ vec
 ```
 
 
-### Working with data frames
+### Object: matrix
 
-Create a data frame with four variables
+A matrix is a collection of elements of the same type of data arranged into a fixed number of rows and columns.
+
+Get to know the `matrix()` function by the help function
+```{r}
+?matrix()
+```
+
+In the Help pane, you can see the usage of `matrix()`, which is `matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)`. Scroll down to see the descriptions of the arguments. 
+- `data` is a vector
+- `nrow` is ... 
+- `nrow` is ... 
+- `byrow` is ... 
+
+Create a matrix using function `matrix()`
+```{r}
+mat1 <- matrix(1:9, nrow = 3, ncol = 3, byrow = TRUE)
+mat1 
+
+mat2 <- matrix(1:9, nrow = 3, ncol = 3, byrow = FALSE)
+mat2
+```
+
+
+#### Matrix indexing
+
+Matrix indexing is similar to vector indexing. It is achieved by square bracket `[]`. The only different is that matrix has one more dimension, so that within the bracket now has two numbers separated by a comma `,`. The number(s) before the comma specify the row(S), the number(s) after the comma specify the columns. When the rows and columns are not specified, all the rows and columns are selected.
+
+Select by row(s)
+```{r}
+mat1[1, ]
+mat1[1:2, ]
+```
+
+Select by column(s)
+```{r}
+mat1[ , 1]
+mat1[ , c(1, 3)]
+```
+
+Select an element at certain row and column 
+```{r}
+mat1[1, 1]
+mat2[3, 3]
+```
+
+
+#### binding row(s) and column(s) to a matrix
+
+Add a row by function `rbind()`
+```{r}
+mat1 <- rbind(mat1, c(9, 9, 9))
+mat1
+```
+
+Add a column by function `cbind()`
+```{r}
+mat2 <- cbind(mat2, c(9, 9, 9))
+mat2
+```
+
+Change the dimensions
+```{r}
+dim(mat1) <- c(6, 2)
+mat1
+```
+
+Transpose a matrix
+```{r}
+t(mat1)
+```
+
+Define row and column names
+```{r}
+rows = c("row1", "row2", "row3", "row4", "row5", "row6")
+cols = c("col1", "col2")
+
+dimnames(mat1) <- list(rows, cols)
+mat1
+```
+
+### Object: data frame
+
+A data frame is the most common way of storing data in R and, generally, is the data structure most often used for data analyses. Under the hood, a data frame is a list of equal-length vectors. 
+
+Data frame also has two dimension, which is similar to matrix. The difference is that
+- in a matrix all the elements are the same type of data,
+- in a data frame the columns contain different types of data.
+
+Get to know the `data.frame()` function by the help function
+```{r}
+?data.frame()
+```
+
+In the Help pane, you can see the usage of `data.frame()`, which is `data.frame(..., row.names = NULL, check.rows = FALSE, check.names = TRUE, fix.empty.names = TRUE, stringsAsFactors = FALSE)`. Scroll down to see the descriptions of the arguments. 
+
+
+
+
+Create a data frame with four variables/vectors
 ```{r}
 df <- data.frame(c("Anna","Patrick","John"),
                  c(165,170,168),
@@ -113,36 +305,14 @@ names(df) <- c("Name","Height", "Income", "Age")
 df
 ```
 
-
-Extract all rows, all colums
+Extract values using variable names by adding `$` and variable name after the dataset name.
 ```{r}
-df[,]
+df$Age
 ```
 
-Extract first row and all columns
-```{r}
-df[1,]
-```
+#### Exercise #2
 
-Extract first two rows and all columns
-```{r}
-df[1:2,]
-```
-
-Extract first and third row and all columns
-```{r}
-df[c(1,3),]
-```
-
-Extract first row and second and third column
-```{r}
-df[1,2:3]
-```
-
-
-### Exercise #1
-
-Extract third column with all rows
+Extract all names shown in df
 ```{r}
 
 ```
@@ -156,15 +326,6 @@ Substitute element at 2nd row, 3rd column with 50000
 ```{r}
 
 ```
-
-
-You can also extract values using variable names by adding `$` and variable name after the dataset name
-
-E.g. Extract the first two observations of the `Age` variable
-```{r}
-df$Age[1:2]
-```
-
 
 ## Changing format of variables
 
@@ -239,6 +400,77 @@ canada.oil %>%
   geom_text(aes(label = percentage),
             position = position_stack(vjust = 0.5))
 ```
+
+### Object: array
+
+R arrays are the data objects which store data in more than two dimensions.
+
+Get to know the `array()` function by the help function
+```{r}
+?array()
+```
+
+In the Help pane, you can see the usage of `array()`, which is `array(data = NA, dim = length(data), dimnames = NULL)`. Scroll down to see the descriptions of the arguments.
+
+Create an array using function `array()`
+```{r}
+array1 <- array(1:18, dim = c(3,3,2))
+array1
+```
+
+Define names
+```{r}
+column.names <- c("COL1", "COL2", "COL3")
+row.names <- c("ROW1", "ROW2", "ROW3")
+matrix.names <- c("Matrix1", "Matrix2")
+
+array2 <- array(1:9, dim = c(3,3,2), 
+                dimnames = list(row.names, column.names, matrix.names))
+array2
+```
+
+Calculations across array
+```{r}
+apply(array2, 1, sum)
+apply(array2, 2, sum)
+apply(array2, 1:2, sum)
+```
+
+
+### Object: list
+
+List is the object which contains elements of different types – like strings, numbers, vectors and another list inside it. R list can also contain a matrix or a function as its elements. 
+
+Created a list using the `list()` function
+```{r}
+x <- list(a, b, c, d, vec, vec2, vec3, array1)
+x
+```
+
+When the task became complex, array and list would be handy. You are encouraged to join our advanced R workshop to learn more about how to use them.
+
+
+## packages
+
+When you download and install R for the first time, you are installing the Base R software. Base R will contain basic functions written by the original authors of the R language. If you want to access data and code written by other people, you’ll need to install it as a package. An R package is simply a bunch of data, functions, help menus, vignettes (examples), stored together.
+
+A package is like a light bulb. In order to use it, you first need to order it to your house (i.e.; your computer) by **installing** it. Once you’ve installed a package, you never need to install it again. However, every time you want to actually use the package in a new session, you need to turn it on by **loading** it.
+
+Install a package
+```{r}
+# install.packages('tidyverse') 
+```
+
+Load a package
+```{r}
+library('tidyverse')
+```
+
+Load a packages (if no intalled yet, install first)
+```{r}
+if (!require('gapminder')) install.packages('gapminder') 
+```
+
 
 ## Importing and exporting data 
 
