@@ -702,6 +702,12 @@ This is how piping looks like:
 ```
 
 
+This is how nested parentheses looks like:
+```{r}
+# 3rd function to execute ( 2nd function to execute ( 1st function to execute (DataFrame)))
+```
+
+
 #### Group_by function
 
 Group_by function allows you to do operations by groups. E.g. find maximum life expectancy by continent
@@ -711,6 +717,10 @@ countries %>%
   summarise(max_lifeExp=max(lifeExp))
 ```
 
+An example of nested parentheses without piping
+```{r}
+summarise(group_by(countries, continent), max_lifeExp=max(lifeExp))
+```
 
 #### Example of Piping
 
