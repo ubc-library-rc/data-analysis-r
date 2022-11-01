@@ -1,3 +1,8 @@
+---
+nav_exclude: true
+---
+
+
 # waiting and [pre-workshop setup](https://ubc-library-rc.github.io/data-analysis-r/#pre-workshop-setup)
 Hello, this is <ins>presenter name</ins>. I'm the presenter today. We are going to get started in just a few minutes. We're expecting about <ins>number of registration</ins> folks today. Thank you so much.
 
