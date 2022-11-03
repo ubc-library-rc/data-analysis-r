@@ -6,7 +6,9 @@ title: Participating online
 # Participating online
 Active participation enlivens the session with other voices and perspectives. We encourage you to engage with instructors and with each other.
 
-Microphones are muted by default to improve audio quality and recording is disabled to preserve participant privacy.
+Microphones are muted by default to improve audio quality, but you can raise your hand to unmute yourself.
+
+Recording is enabled and will be made available to everyone who registered for the workshop.
 
 The Zoom toolbar provides several ways to be part of the conversation:
 
