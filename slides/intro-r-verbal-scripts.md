@@ -4,7 +4,7 @@ nav_exclude: true
 
 
 # waiting and [pre-workshop setup](https://ubc-library-rc.github.io/data-analysis-r/#pre-workshop-setup)
-Hello, this is <ins>presenter name</ins>. I'm the presenter today. We are going to get started in just a few minutes. We're expecting about <ins>number of registration</ins> folks today. Thank you so much.
+Hello, this is <ins>presenter name</ins>. I'm the presenter today. We are going to get started in just a few minutes. Thank you so much.
 
 Before getting started, we'd like everyone to take the time to make sure that you **have R and RStudio installed** on your computer. 
 - If you haven't, the link to the web page I am sharing now is on the chat. Please click on the link to visit the web page and follow the instructions to download and install R and RStudio.
@@ -50,12 +50,12 @@ We assume you have already installed R and RStudio on your computer. That's the 
 However, if you haven't installed them. No worries, it's fine. You may just watch my screen, and try it on later by yourself. You will have access to all the materials needed.
 
 ## [R](https://ubc-library-rc.github.io/data-analysis-r/slides/intro-r-studio.html#/7)
-R is a programming language developed by statisticians for data analysis. Let's **open R** (RGui (R Graphical User Interface))together to have a look at its interface.
+R is a programming language developed by statisticians for data analysis. 
 
 It has several attactive features,
 1. It's free and open source. Whenever you open it, there is an description shown automatically in the R console, telling you the version, copyrght, platform and free.
 2. **R console** executes commands as you type them. It provide an interactive environment. The interactivity enables you to quickly explore data. 
-3. One of the great advantages of R over point-and-click analysis software is that you can save your work as scripts that can be easily executed at any moment. These scripts serve as a record of the analysis you performed, a key feature that facilitates reproducible work. You can edit and save these scripts in **R editor**. R editor usually do not show up automatically when you open R. You need to go to File - new script, or open script if you have one. R editor is recommmended if you wanna save your work for future use. R console is recommended if you wanna have a quick exploration and it does not need to be saved. And of course, they can be used together. R console can facilitate interactive scripting.
+3. One of the great advantages of R over point-and-click analysis software is that you can save your work as scripts that can be easily executed at any moment. These scripts serve as a record of the analysis you performed, a key feature that facilitates reproducible work. 
 
 ## [R Studio](https://ubc-library-rc.github.io/data-analysis-r/slides/intro-r-studio.html#/8)
 R Studio makes it easier to work with R. [R vs RStudio:](https://mgimond.github.io/ES218/R_vs_RStudio.html)
@@ -67,13 +67,13 @@ Once again, let's **open RStudio** together to have a look at its interface. Whe
 - On the right, the top pane includes tabs such as Environment and History. The Environment tab allows you to see what objects are in the workspace. The History tab allows you to see the commands that you have entered. 
 - The bottom pane shows tabs such as File, Plots, Packages and Help. You can browse the various files and folders on a computer in File. In Plot, you can obtain the plots. In Packages, you can view the list of all the installed packages. In help, you can can browse the built-in help system of R with this command ? followed by something you wanna ask. For example, let's type ?mean() in the console and see what's come up in the Help. So it tells you, this is a generic function for the arithmetic mean from the base package (if you don't know what the package is yet, don't be scared, we will talk about it more later).
 
-To start a new script, click on File, then New File, then R Script. It shows up in the top left pane.
+To start a new script, click on File, then New File, then R Script. It shows up in the top left pane. Script is recommmended if you wanna save your work for future use. R console is recommended if you wanna have a quick exploration and it does not need to be saved. And of course, they can be used together. 
 You can also create a R Markdown file. Once a markdown file is created, you can see a brief introduction about it. 
 
 
 ## [R Markdown](https://ubc-library-rc.github.io/data-analysis-r/slides/intro-r-studio.html#/9)
 R Markdown is a specific type of file format designed to produce documents that include both code and text/narratives are in the same document. 
-- Although ou can also put text as annotation in R script with a # sign,  R Markdown allows results to be automatically generated from the source code. For example, if you click on the **run** button here (keyboard shortcuts are available, refer to the drop-down menu on run in the upper right corner of the pane), the results show just beneath the code. Let's just **minimize R console** to increase visibility. It shows repetitive information of the code executed and the results.
+- Although you can also put text as annotation in R script with a # sign,  R Markdown allows results to be automatically generated from the source code. For example, if you click on the **run** button here (keyboard shortcuts are available, refer to the drop-down menu on run in the upper right corner of the pane), the results show just beneath the code. Let's just **minimize R console** to increase visibility. It shows repetitive information of the code executed and the results.
 - Besides, R Markdown supports dozens of static and dynamic/interactive output formats. For example, if you click **Knit** here, you can render it as html, pdf, or word document, etc. 
 
 From now on, we will work on the R markdown file prepared for the intro R workshop. Up to now, do you have any questions?
