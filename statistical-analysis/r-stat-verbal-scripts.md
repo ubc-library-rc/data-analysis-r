@@ -18,5 +18,8 @@ Point to the Rmd file and ask everyone to download it.
 # Open R Studio
 - Start with no Rmd file and briefly introduce the main parts of the interface. 
 - Open the Rmd file from the file menu. 
-- Briefly explain why we use that format for our workshops. 
+- Briefly explain why we use Rmd format for our workshops. 
 - Show the “play” icons next to each code block and and the keyboard shortcut in the top right corner, tell participants that’s how they will be able to follow along
+- Use the participants pane to ask about the pace at least once during the workshop (e.g. a green check-mark if the pace is just right, or the “speed up” or “slow down” icons). Tell people that you’d like to hear from everyone and give them time to respond.
+- Pay attention to time, and have a break half way
+- If there are time left, use it as an Q&A section 
