@@ -8,11 +8,11 @@ nav_exclude: true
 ---
 
 # Advanced R Skills
-
+Hey Jared, please add an brief description of the workshop here.
 
 
 ### R markdown file
-- [R markdown file](Adcanced Skills Workshop.Rmd){:target="_blank"}
+- [R markdown file](Adcanced-Skills-Workshop.Rmd){:target="_blank"}
 
 ### Optional files
 - [R markdown file with answers](){:target="_blank"}
