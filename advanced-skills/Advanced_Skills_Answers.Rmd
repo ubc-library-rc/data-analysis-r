@@ -1,0 +1,546 @@
+---
+title: "Advanced Skills Workshop"
+output: html_document
+date: "2022-11-21"
+---
+Workshop overview: 
+
+- For loops
+- Nested for loops 
+- Break, 5-10 mins 
+- Conditional (if/else) statements
+- Custom functions 
+- Additional practice problems 
+
+###GETTING STARTED 
+
+```{r}
+#install.packages('openintro')
+#install.packages('dplyr')
+#install.packages('gapminder')
+#install.packages('ggplot2')
+#install.packages('viridis)
+
+library(openintro)
+library(dplyr)
+library(gapminder)
+library(ggplot2)
+library(viridis)
+
+```
+
+We will be using three datasets in this workshop: 
+
+(1) 'countries' from the gapminder package - Macroeconomic (e.g. GDP per capita) and demographic (e.g. population) data for every country in the world, by year 
+
+
+```{r}
+countries <- gapminder # create a data frame
+head(countries) #see the first six rows of the dataframe
+str(countries) #look at the structure of the dataframe
+names(countries) #variables in the dataset
+```
+
+(2) 'storms' from the dplyr package - Location and weather data for hurricanes in the US
+
+```{r}
+head(storms)
+```
+
+(3) 'midterms' from the openintro package - midterm election results by year, party, and unemployment rate 
+
+```{r}
+midterms <- midterms_house
+head(midterms)
+?midterms_house #look at dataset documentation 
+```
+
+###FOR LOOPS
+
+For loop's basic structure 
+
+for (i in vector/list/matrix/dataframe){
+ some operation with i 
+}
+
+one step in a loop = one 'iteration' 
+
+numeric vector example: 
+```{r}
+#a simple loop: 
+
+numbers <- 1:10 #creating a vector of numbers 1 through 10 
+
+for (i in numbers){
+  print(i)
+}
+
+for (i in numbers){
+  print(i)
+  Sys.sleep(0.5) #this staggers each output by 0.5 seconds
+}
+
+#in this illustrative example, you need to include print, or the loop will run without producing output. 
+```
+
+numeric vector example: 
+```{r}
+other_numbers <- c(4,7,5,2,2,3,1)
+
+for (i in other_numbers){
+  print(i) #i is looped through in the given order 
+}
+```
+
+character vector example: 
+```{r}
+letters #displaying built-in alphabet vector 
+
+for (i in letters){
+  print(i)
+}
+```
+```{r}
+matrix <- matrix(nrow = 3, ncol = 5, c(1:15))
+matrix
+
+for (i in matrix){
+  print(i)
+}
+```
+
+dataframe example: 
+```{r}
+###looping through the unique political parties in our midterms dataset
+for (i in unique(midterms$party)){
+  print(i)
+}
+
+#note i is an object and never in quotes. i is commonly-used 
+#but arbitrary. You can make it more meaningful to you if thats easier, e.g.: 
+
+for (Parties in unique(midterms$party)){
+  print(Parties)
+}
+```
+
+Applying an operation by looping through the parties in the midterms dataset
+```{r}
+###finding the maximum value of house_change for each party
+#if we wanted to do this for ONE party, e.g. Republican 
+
+max(midterms$house_change[midterms$party == 'Republican'])
+
+#uses square brackets to subset, will be using this throughout the workshop
+```
+
+individual components we need to build our for loop: 
+
+1. unique(midterms$party)
+2. max(midterms$house_change[midterms$party == Party])
+3. for loop struture: 
+
+for (i in vector){
+ operation 
+}
+
+```{r}
+#building this into a for loop, for all parties
+for (i in unique(midterms$party)){
+  x <- max(midterms$house_change[midterms$party == i])
+  print(x)
+}
+
+#can save as an object or embed max within print , i.e 
+#print(max(countries$gdpPercap[countries$country == i]))
+```
+
+#PRACTICE TOGETHER 
+
+Another example, with a different dataset: 
+finding the average latitude for each storm in the dataset
+
+individual components we need to build our for loop: 
+
+1. unique(storms$name) 
+2. mean(storms$lat[storms$name == Storm name])
+3. for loop struture: 
+
+for (i in vector){
+ operation 
+}
+
+```{r}
+#storms dataset, from dplyr
+head(storms)
+
+#finding the average latitude for each storm in the dataset 
+for (i in unique(storms$name)){
+  print(i)
+  x <- mean(storms$lat[storms$name == i])
+  print(x)
+}
+```
+
+#PRACTICE: 
+
+Using the 'countries' dataset, use a for loop to find the maximum value of GDP per capita (gdpPercap) for each country
+
+```{r}
+
+for (i in unique(countries$country)){
+  x <- max(countries$gdpPercap[countries$country == i])
+  print(x)
+}
+
+```
+
+Saving the output of your for loop:
+
+lets create a new dataset called 'country_sum, of summary variables by country, with country as one column and max gdp per capita as another 
+
+```{r}
+#creating empty vectors for the values we want to store
+country <- 0
+maxgdp <- 0
+
+#to store values in a vector, we need to create a count, to add values to a vector as we move through each iteration of the loop 
+index <- 0 
+
+#vector[x] points to position x in the vector
+
+for (i in unique(countries$country)){
+  maxgdp[index] <- max(countries$gdpPercap[countries$country == i])
+    #create vector of max gdpPercap values by country 
+  country[index] <- i #create vectors of countries
+  index <- index + 1 #add one to the index to avoid replacement
+  print(index) #print index at each iteration (not required)
+}
+
+#look at our new vectors
+head(maxgdp)
+head(country)
+
+#combine vectors into a dataframe
+country_sum <- data.frame(country, maxgdp)
+head(country_sum)
+
+#there are other ways of doing this, by creating a dataframe and using that directly in the for-loop, but I think this format is more beginner-friendly 
+```
+
+#PRACTICE: 
+
+modify the code below to create a new dataframe with two columns: Party, and max midterms house change (x in the example code). Name your columns however you'd like. 
+
+```{r}
+
+#original code:
+for (i in unique(midterms$party)){
+  x <- max(midterms$house_change[midterms$party == i])
+  print(x)
+}
+
+#answer: 
+party <- 0
+max_change <- 0
+index <- 0
+
+for (i in unique(midterms$party)){
+  index <- index + 1 
+  max_change[index] <- max(midterms$house_change[midterms$party == i])
+  party[index] <- i
+}
+
+Max_Change_DF <- data.frame(party, max_change)
+Max_Change_DF
+
+```
+
+More complicated operations in looping 
+```{r}
+#add year 
+
+year <- 0 
+country <- 0
+maxgdp <- 0
+
+index <- 0 
+
+for (i in unique(countries$country)){
+  maxgdp[index] <- max(countries$gdpPercap[countries$country == i])
+  country[index] <- i #same as previous example up to here 
+  year[index] <- countries$year[countries$gdpPercap == maxgdp[index]]
+  index <- index + 1 #add one to the index to avoid replacement
+}
+
+country_sum <- data.frame(country, maxgdp, year)
+head(country_sum)
+
+```
+
+###NESTED FOR LOOPS 
+
+nice analogies for nested looping: 
+
+  - like going through words in a book, by pages 
+  - like going through values in rows of a matrix, by columns 
+  
+```{r}
+
+#conceptual example: 
+
+page1 <- c("I", "wrote", "this", "book")
+page2 <- c("I", "think", "its", "pretty", "good")
+page3 <- c("The", "end")
+
+mybook <-list(page1, page2, page3)
+
+for (i in 1:length(mybook)){
+  print(i)
+  for (j in mybook[[i]]){
+    print(j)
+  }
+}
+```
+
+example with the storms dataset 
+```{r}
+head(storms)
+
+#Lets create a new dataframe, where we summarize the total number of days of storms, by 'status' (type of storm), for each year of data
+
+#creating empty vectors for our desired variables 
+
+days <- 0 
+year <- 0 
+status <- 0 
+
+index <-0 
+
+for (i in unique(storms$year)){ #looping through years
+  for (j in unique(storms$status)){ #looping through storm status
+    days[index] <- nrow(storms[storms$year == i & storms$status == j,])/4 #counting the number of rows of data in each year, for each status to get to the number of days 
+#have to divide by four, because there are four entries per day
+    year[index] <- i 
+    status[index] <- j
+    index <- index + 1 
+  }
+}
+
+storm_data <- data.frame(year, status, days)
+head(storm_data)
+```
+
+working with your new dataset: 
+```{r}
+#can plot your data 
+
+ggplot(storm_data, aes(x = year, y = days, col = status)) + 
+  geom_point() + 
+  geom_smooth(aes(col=status),method="lm", se = FALSE)+
+  #change colours
+  scale_colour_viridis(discrete = TRUE) + 
+  #rotate axis text, modifying theme 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  theme_minimal()
+```
+
+```{r}
+#or analyze your data 
+
+model_list<-list() #creating empty list
+
+#create a list of models 
+for (i in unique(storm_data$status)){
+  model_list[[i]] <- summary(lm(days ~ year, data = storm_data[storm_data$status == i,]))
+}
+
+model_list
+```
+
+```{r}
+#or create individual objects for each model based on i 
+for (i in unique(storm_data$status)){
+  assign(paste0("model_", i), summary(lm(days ~ year, data = storm_data[storm_data$status == i,])))
+}
+
+model_hurricane
+
+```
+
+BREAK 
+
+IF/ELSE STATEMENTS  
+
+Basic structure of an if statement: 
+
+  if (logical statement){
+   operation true} 
+   
+can be expanded to an if/else statement: 
+  
+  if (logical statement){
+   operation if true} 
+   else{operation if false}
+   
+examples of logical statements: 
+
+x > 5 
+x == 4 
+x == "cat"
+x != 0
+
+Simple example: 
+
+```{r}
+
+x = 6 #set x to 6 
+
+if (x > 5){
+  print("x is greater than 5")
+}
+
+x = 4 #set x to 4 
+
+#add an else statement 
+if (x > 5){
+  print("x is greater than 5")
+} else {
+  print("x is less than 5")
+}
+```
+
+if/else statement become very useful when embedded within a for loop: 
+
+```{r}
+
+#e.g., create a binary variable for Republican (1) and Democrat (0)
+
+midterms$binary <- NA
+
+for (i in 1:nrow(midterms)){
+if(midterms$party[i] == 'Republican'){
+  midterms$binary[i] = 1} else {
+    midterms$binary[i] = 0
+  }
+}
+
+head(midterms)
+```
+
+CUSTOM FUNCTIONS
+
+Basic structure of a custom function: 
+
+my_function <- function(argument1, argument2, ...) {
+  some operation using arguments 
+  return(desired output)
+}
+
+for example, building a 'multiplier' function:
+
+```{r}
+
+multiplier <- function(n1, n2){
+  output <- n1*n2
+  return(output)
+}
+
+#or 
+
+multiplier <- function(n1, n2){
+  return(n1*n2)
+}
+
+multiplier(2,5)
+
+```
+
+PRACTICE (5-10 mins): 
+
+build a function (called 'my_mean') that calculates the mean of two numbers (n1 and n2), without using the mean function
+
+```{r}
+
+my_mean <- function(n1, n2){
+  return((n1+n2)/2)
+}
+
+my_mean(2,5)
+```
+
+if we wanted to expand this, to work on an entire vector: 
+
+```{r}
+
+vec <- c(1,3,4,7,4,3) #creating new vector 
+
+my_mean <- function(vec){
+  return((sum(vec))/length(vec))
+}
+
+my_mean(vec) #runnning our function on our vector 
+mean(vec) #checking it worked 
+```
+
+more complicated example, building a standard deviation function: 
+
+standard deviation =  sqrt(sum((x - mean)^2)/N)
+
+```{r}
+
+#to do this OUTSIDE a custom function 
+
+numbers<-c(2,4,5,1,3,4)
+
+x <- 0
+index <- 1 
+
+for (i in numbers){
+  x[index] <- (i - mean(numbers))^2
+  index <- index + 1 
+}
+
+stddev <- sqrt(sum(x)/length(numbers))
+stddev
+```
+
+if we wanted to repeat our calculation for many different vectors, we could create a custom function with a for loop 
+
+```{r}
+
+standard.dev <- function(values){ #providing our function argument
+x <- 0 #creating and empty vector 
+index <- 1 #creating an index for storing values
+for (i in values){
+  x[index] <- (i - mean(values))^2
+  index <- index + 1 
+}
+stddev <- sqrt(sum(x)/length(values)) #note output goes outside 
+return(stddev) #the for loop 
+}
+  
+standard.dev(values = midterms$unemp)
+#or 
+standard.dev(midterms$unemp)
+```
+
+EXTRA CHALLENGE: modify your mean function to calculate the mean of each vector in the list provided (note to grab one vector from a list, you would use [[ ]], eg list[[2]] would grab the second vector in a list)
+
+```{r}
+vec1 <- c(1,2)
+vec2 <- c(4,5,6)
+vec3 <- c(7,8,9,10)
+
+vec_list <- list(vec1, vec2, vec3)
+
+my_mean_list <- function(list1){
+  output <- 0 
+    for (i in 1:length(list1)){
+    output[i] <- (sum(list1[[i]])/length(list1[[i]]))}
+    return(output)
+}
+
+my_mean_list(vec_list)
+```
+

@@ -8,11 +8,14 @@ nav_exclude: true
 ---
 
 # Advanced R Skills
-Hey Jared, please add an brief description of the workshop here.
+This workshop will provide an introduction to some advanced R skills - for loop and custom function. Participants are expected to be familiar with R and the RStudio environment.
 
 
 ### R markdown file
-- [R markdown file](Advanced-Skills-Workshop.Rmd){:target="_blank"}
+Contains code used during the workshop.
+- [R markdown file](Advanced-Skills.Rmd){:target="_blank"}
+- [R markdown file with answers](Advanced-Skills_Answers.Rmd){:target="_blank"}
 
-### Optional files
-- [R markdown file with answers](){:target="_blank"}
+
+### Workshop slides
+- [Slides in PowerPoint format](Advanced_Skills_Presentation.ppt){:target="_blank"}
