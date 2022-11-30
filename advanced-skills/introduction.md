@@ -13,9 +13,9 @@ This workshop will provide an introduction to some advanced R skills - for loop 
 
 ### R markdown file
 Contains code used during the workshop.
-- [R markdown file](Advanced-Skills.Rmd){:target="_blank"}
-- [R markdown file with answers](Advanced-Skills_Answers.Rmd){:target="_blank"}
+- [R markdown file](Advanced_Skills.Rmd){:target="_blank"}
+- [R markdown file with answers](Advanced_Skills_Answers.Rmd){:target="_blank"}
 
 
 ### Workshop slides
-- [Slides in PowerPoint format](Advanced_Skills_Presentation.ppt){:target="_blank"}
+- [Slides in PowerPoint format](Advanced_Skills_Presentation.pptx){:target="_blank"}
