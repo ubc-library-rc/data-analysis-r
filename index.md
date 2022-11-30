@@ -20,7 +20,7 @@ This four-part workshop series will provide an introduction to data analysis and
   - This workshop will provide an introduction to developing interactive visualizations and dashboards using Shiny - a package for making web applications in R. This workshop is for participants who already have a basic understanding of visualization in R (consider attending Visualization with R workshop first).
 
 5. [**Advanced R Skills**](advanced-skills/introduction.html)
-  - This workshop will provide an introduction to some advanced R skills - for loop and custom function. Participants are expected to be familiar with R and the RStudio environment.
+  - This workshop will provide an introduction to some advanced R skills - for loops, nested for loops, Conditional (if/else) statements and custom functions. Participants are expected to be familiar with R and the RStudio environment.
 
 ## Pre-workshop setup
 To participate fully you will need to install the latest versions of R and RStudio on your computer ahead of time.

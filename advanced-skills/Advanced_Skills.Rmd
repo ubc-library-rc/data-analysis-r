@@ -3,7 +3,8 @@ title: "Advanced Skills Workshop"
 output: html_document
 date: "2022-11-21"
 ---
-Workshop overview: 
+
+# Workshop overview: 
 
 - For loops
 - Nested for loops 
@@ -12,7 +13,7 @@ Workshop overview:
 - Custom functions 
 - Additional practice problem
 
-###GETTING STARTED 
+# 1 GETTING STARTED 
 
 ```{r}
 #install.packages('openintro')
@@ -55,9 +56,9 @@ head(midterms)
 ?midterms_house #look at dataset documentation 
 ```
 
-###FOR LOOPS
+# 2 FOR LOOPS
 
-For loop's basic structure 
+## 2.1 Basic structure 
 
 for (i in vector/list/matrix/dataframe){
  some operation with i 
@@ -155,7 +156,7 @@ for (i in unique(midterms$party)){
 #print(max(countries$gdpPercap[countries$country == i]))
 ```
 
-#PRACTICE TOGETHER 
+### 2.1.1 PRACTICE TOGETHER 
 
 Another example, with a different dataset: 
 finding the average latitude for each storm in the dataset
@@ -178,7 +179,7 @@ head(storms)
 
 ```
 
-#PRACTICE: 
+PRACTICE: 
 
 Using the 'countries' dataset, use a for loop to find the maximum value of GDP per capita (gdpPercap) for each country
 
@@ -187,7 +188,7 @@ Using the 'countries' dataset, use a for loop to find the maximum value of GDP p
 
 ```
 
-Saving the output of your for loop:
+## 2.2 Saving the output of your for loop:
 
 lets create a new dataset called 'country_sum, of summary variables by country, with country as one column and max gdp per capita as another 
 
@@ -220,7 +221,7 @@ head(country_sum)
 #there are other ways of doing this, by creating a dataframe and using that directly in the for-loop, but I think this format is more beginner-friendly 
 ```
 
-#PRACTICE: 
+### 2.2.1 PRACTICE: 
 
 modify the code below to create a new dataframe with two columns: Party, and max midterms house change (x in the example code). Name your columns however you'd like. 
 
@@ -258,7 +259,7 @@ head(country_sum)
 
 ```
 
-###NESTED FOR LOOPS 
+## 2.3 NESTED FOR LOOPS 
 
 nice analogies for nested looping: 
 
@@ -348,11 +349,11 @@ model_hurricane
 
 ```
 
-BREAK 
+# BREAK 
 
-IF/ELSE STATEMENTS  
+# 3 IF/ELSE STATEMENTS  
 
-Basic structure of an if statement: 
+## 3.1 Basic structure
 
   if (logical statement){
    operation true} 
@@ -408,9 +409,9 @@ if(midterms$party[i] == 'Republican'){
 head(midterms)
 ```
 
-CUSTOM FUNCTIONS
+# 4 CUSTOM FUNCTIONS
 
-Basic structure of a custom function: 
+## 4.1 Basic structure 
 
 my_function <- function(argument1, argument2, ...) {
   some operation using arguments 
@@ -436,7 +437,7 @@ multiplier(2,5)
 
 ```
 
-PRACTICE (5-10 mins): 
+### 4.1.1 PRACTICE (5-10 mins): 
 
 build a function (called 'my_mean') that calculates the mean of two numbers (n1 and n2), without using the mean function
 
@@ -501,7 +502,9 @@ standard.dev(values = midterms$unemp)
 standard.dev(midterms$unemp)
 ```
 
-EXTRA CHALLENGE: modify your mean function to calculate the mean of each vector in the list provided (note to grab one vector from a list, you would use [[ ]], eg list[[2]] would grab the second vector in a list)
+### 4.1.2 EXTRA CHALLENGE
+
+modify your mean function to calculate the mean of each vector in the list provided (note to grab one vector from a list, you would use [[ ]], eg list[[2]] would grab the second vector in a list)
 
 ```{r}
 vec1 <- c(1,2)

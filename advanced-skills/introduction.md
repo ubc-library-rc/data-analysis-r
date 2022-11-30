@@ -8,7 +8,7 @@ nav_exclude: false
 ---
 
 # Advanced R Skills
-This workshop will provide an introduction to some advanced R skills - for loop and custom function. Participants are expected to be familiar with R and the RStudio environment.
+This workshop will provide an introduction to some advanced R skills - for loops, nested for loops, Conditional (if/else) statements and custom functions. Participants are expected to be familiar with R and the RStudio environment.
 
 
 ### R markdown file
