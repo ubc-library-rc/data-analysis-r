@@ -4,7 +4,7 @@ title: Advanced R Skills
 nav_order: 8
 has_children: true
 has_toc: false
-nav_exclude: true
+nav_exclude: false
 ---
 
 # Advanced R Skills
