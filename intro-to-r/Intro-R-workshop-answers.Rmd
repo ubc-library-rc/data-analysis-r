@@ -1,109 +1,372 @@
 ---
----
-
----
 title: "Intro to R and RStudio Workshop"
-author: "Albina Gibadullina and Maria Laricheva"
-date: "Updated September 21, 2022"
+author: "Albina Gibadullina, Maria Laricheva, Ashley (Yue) Mao"
+date: "Dec 5, 2022"
 output: 
   html_document:
     theme: yeti
     toc: true
     toc_float: true
+editor_options: 
+  chunk_output_type: inline
+  markdown: 
+    wrap: 72
 ---
 
 # Intro to R and RStudio
 
-## Installing and loading needed packages
+## 1 R Studio Cheat Sheet
 
-Install R packages
+Click `Help - Cheat Sheets - R Studio IDE Cheat Sheet` to access a
+detailed documentation.
+
+## 2 Working directory
+
+When you have put the file in your target folder and open it with
+RStudio, you can click on
+`Session - Set Working Directory - To Source File Location`, to set your
+working directory.
+
+Working directory is a file path on your computer that sets the default
+location of any files you read into R, or save out of R.
+
+Check working directory
+
 ```{r}
-#install.packages("tidyverse")
-#install.packages("gapminder")
+getwd()
 ```
 
-Load R packages
-```{r warning = FALSE, message = FALSE, error = FALSE}
-library(tidyverse) # a collection of R packages designed for data science (e.g.dplyr, ggplot2, tidyr, forcats)
-library(gapminder) # a package with the gapminder dataset
-```
+## 3 Operators
 
-
-## Manually inputting and/or modifying values
-
-### Creating new variables
+| Operators |      Description      |
+|:---------:|:---------------------:|
+|   `<-`    |      assignment       |
+|    `+`    |       addition        |
+|    `-`    |      subtraction      |
+|    `*`    |    multiplication     |
+|    `/`    |       division        |
+|   `<=`    | less than or equal to |
+|   `==`    |   exactly equal to    |
+|   `!=`    |     not equal to      |
+|    `!`    |          Not          |
+|    `|`    |          OR           |
+|    `&`    |          AND          |
 
 Assign values to variables
+
 ```{r}
 a <- 4
 a
-b <- 5
+b <- 5.5
 b
 ```
 
 Create a new variable from existing variables
+
 ```{r}
-c <- 6+a
+c <- 6 + a
 c
 d <- a + b + c
 d
 ```
 
 See if two variables equal to one another
+
 ```{r}
-c==d
+c == d
 ```
 
 See if two variables are not equal to one another
+
 ```{r}
-c!=d
+c != d
 ```
 
+All the objects are visible on the `Environment` pane in the top right.
 
-### Working with vectors
+## 4 Data Type
 
-Create a vector
+-   numeric (quantitative, with decimal points)
+-   integer (quantitative, only integers)
+-   logical (TRUE or FALSE)
+-   character (text/strings)
+-   factor (categorical variable) -- skip, introduce later
+-   ...
+
+Check the type of data using function `class()`
+
+```{r}
+class(a)
+class(b)
+class(c)
+class(d)
+```
+
+Characters are surrounded by quotation marks `'` or `"` in R
+
+```{r}
+e <- "a"
+class(e)
+```
+
+## 5 Data Structure
+
+There are many types of R-objects. They can be classified based on their
+dimensions and whether their data is of the same type (homogeneous) or
+different type (heterogeneous).
+
+-   Scalar (a single value)
+-   Vector (multiple values, homogeneous, one dimension)
+-   Matrix (multiple values, homogeneous, two dimensions)
+-   Data Frame (multiple values, heterogeneous, two dimensions)
+-   Array (multiple values, homogeneous, multiple dimensions) - not
+    covered today
+-   List (multiple values, heterogeneous, flexible dimensions) - not
+    covered today
+
+When the task became complex, array and list would be handy. You are
+encouraged to join future workshops to learn more about how to use them.
+
+### 5.1 Object: vector
+
+Vectors are the simplest data structures in R. They are element(s) of
+the same basic type. In R, the more complicated data structures are made
+with vectors as building-blocks. The object a, b, c, d, e that we
+created can be seen as a vector of a single element.
+
+Create a vector of multiple elements by `c()` and elements within the
+bracket are separated by a comma `,`
+
 ```{r}
 vec <- c(0, 1, 2, 3, 4, 5)
 vec
 ```
 
+Colon ':' simplify the procedure of retrieving consecutive numbers
 
-Select the first value of vec:
+```{r}
+vec1 <- 0:5
+vec1
+```
+
+Create a vector from existing objects
+
+```{r}
+vec2 <- c(vec, vec1) # binding vectors
+vec2
+```
+
+#### 5.1.1 Exercise #1
+
+Why are `vec3` and `vec4` different?
+
+```{r}
+vec3 <- c(a, b, c, d)
+vec3
+
+vec4 <- c('a', 'b', 'c', 'd')
+vec4
+```
+
+How do you check the type of data of the elements in `vec3` and `vec4`?
+
+```{r}
+class(vec3)
+class(vec4)
+```
+
+What if you bind `vec3` and `vec4` together and assign the outcome into
+a new vector called `vec5`? Will `vec5` contain different types of data?
+
+```{r}
+vec5 <- c(vec3, vec4)
+vec5
+class(vec5)
+```
+
+#### 5.1.2 Vector indexing
+
+Since there are multiple elements in a vector. Sometimes you need to
+select one or several elements from a vector. Selection is done by a
+square bracket `[]` with an indexing number within it. Indexing in R
+starts from 1 (different from Python, which starts from 0).
+
+Select the first value of `vec`:
+
 ```{r}
 vec[1]
 ```
 
+Select the first three values of `vec`:
 
-And here is how you can modify it:
+```{r}
+vec[1:3]
+```
+
+Now we can have a closer check of whether `vec5` contains different
+types of data.
+
+```{r}
+class(vec5[1:4])
+class(vec5[5:8])
+```
+
+We select elements from `vec5` to check their type of data. Sometime, we
+may want to change its values. Here is some examples of how to modify
+the value of certain element(s).
+
+Modify an element in the vector:
+
 ```{r}
 vec[1] <- 1000
 vec
 ```
 
+Replace multiple values at once as long as the number of new values
+equals the number of selected values:
 
-You can replace multiple values at once as long as the number of new values equals the number of selected values:
 ```{r}
 vec[c(1, 3, 5)] <- c(-1, -2, -3)
 vec
 ```
 
 Add +1 to the 4th to 6th values
+
 ```{r}
 vec[4:6] <- vec[4:6] + 1
 vec
 ```
 
-You can also create values that do not yet exist in your object. R will expand the object to accommodate the new values:
+You can also create values that do not yet exist in your object. R will
+expand the object to accommodate the new values:
+
 ```{r}
 vec[7] <- 10
 vec
 ```
 
+### 5.2 Object: matrix
 
-### Working with data frames
+A matrix is a collection of elements of the same type of data arranged
+into a fixed number of rows and columns.
 
-Create a data frame with four variables
+Get to know the `matrix()` function by the help function
+
+```{r}
+?matrix()
+help(matrix)
+```
+
+In the Help pane, you can see the usage of `matrix()`, which is
+`matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)`.
+Scroll down to see the descriptions of the arguments. - `data` is a
+vector - `nrow` is ... - `nrow` is ... - `byrow` is ...
+
+Create a matrix using function `matrix()`
+
+```{r}
+mat1 <- matrix(data = 1:9, nrow = 3, ncol = 3, byrow = TRUE)
+mat1 
+
+mat2 <- matrix(data = letters[1:9], nrow = 3, ncol = 3, byrow = FALSE)
+mat2
+```
+
+#### 5.2.1 Matrix indexing
+
+Matrix indexing is similar to vector indexing. It is achieved by square
+bracket `[]`. The only different is that matrix has one more dimension,
+so that within the bracket now has two numbers separated by a comma `,`.
+The number(s) before the comma specify the row(S), the number(s) after
+the comma specify the columns. When the rows and columns are not
+specified, all the rows and columns are selected.
+
+Select by row(s)
+
+```{r}
+mat1[1, ]
+mat1[1:2, ]
+```
+
+Select by column(s)
+
+```{r}
+mat1[ , 1]
+mat1[ , c(1, 3)]
+```
+
+Select an element at certain row and column
+
+```{r}
+mat1[1, 1]
+mat2[3, 3]
+```
+
+#### 5.2.2 binding row(s) and column(s) to a matrix
+
+Add a row by function `rbind()`
+
+```{r}
+mat1 <- rbind(mat1, c(9, 9, 9))
+mat1
+```
+
+Add a column by function `cbind()`
+
+```{r}
+mat2 <- cbind(mat2, c(9, 9, 9))
+mat2
+```
+
+Change the dimensions
+
+```{r}
+dim(mat1)
+dim(mat1) <- c(6, 2)
+mat1
+```
+
+Transpose a matrix
+
+```{r}
+t(mat1)
+```
+
+Define row and column names
+
+```{r}
+rows = c("row1", "row2", "row3", "row4", "row5", "row6")
+cols = c("col1", "col2")
+
+dimnames(mat1) <- list(rows, cols)
+mat1
+```
+
+### 5.3 Object: data frame
+
+A data frame is the most common way of storing data in R and, generally,
+is the data structure most often used for data analyses. Under the hood,
+a data frame is a list of equal-length vectors.
+
+Data frame also has two dimension, which is similar to matrix. The
+difference is that
+
+-   in a matrix all the elements are the same type of data,
+
+-   in a data frame the columns contain different types of data.
+
+Get to know the `data.frame()` function by the help function
+
+```{r}
+?data.frame()
+```
+
+In the Help pane, you can see the usage of `data.frame()`, which is
+`data.frame(..., row.names = NULL, check.rows = FALSE, check.names = TRUE, fix.empty.names = TRUE, stringsAsFactors = FALSE)`.
+Scroll down to see the descriptions of the arguments.
+
+Create a data frame with four variables/vectors
+
 ```{r}
 df <- data.frame(c("Anna","Patrick","John"),
                  c(165,170,168),
@@ -113,123 +376,96 @@ names(df) <- c("Name","Height", "Income", "Age")
 df
 ```
 
+Extract values using variable names by adding `$` and variable name
+after the dataset name.
 
-Extract all rows, all colums
 ```{r}
-df[,]
+df$Age
 ```
 
-Extract first row and all columns
+#### 5.3.1 Exercise #2
+
+Extract all names shown in df
+
 ```{r}
-df[1,]
-```
-
-Extract first two rows and all columns
-```{r}
-df[1:2,]
-```
-
-Extract first and third row and all columns
-```{r}
-df[c(1,3),]
-```
-
-Extract first row and second and third column
-```{r}
-df[1,2:3]
-```
-
-
-### Exercise #1
-
-Extract third column with all rows
-```{r}
-df[,3]
+names(df)
 ```
 
 Extract element at 2nd row, 3rd column
+
 ```{r}
-df[2,3]
+df[2, 3]
 ```
 
 Substitute element at 2nd row, 3rd column with 50000
+
 ```{r}
-df[2,3] <- 50000
-df[2,3]
+df[2, 3] <- 50000
 ```
 
+#### 5.3.2 Change data type
 
-You can also extract values using variable names by adding `$` and variable name after the dataset name
+Check current data format of the `Age` variable
 
-E.g. Extract the first two observations of the `Age` variable
-```{r}
-df$Age[1:2]
-```
-
-
-## Changing format of variables
-
-Main data types:
-
-* character (text/strings)
-* factor (categorical variable)
-* numeric (quantitative variable)
-* integer (quantitative variable, only integers)
-* logical (TRUE or FALSE variable)
-
-
-Check current data format of the  `Age` variable
 ```{r}
 class(df$Age)
 ```
 
-Change the format of `Age` from charachter to factor (categorical)
+Change the format of `Age` from character to factor (categorical)
+
 ```{r}
 df$Age <- as.factor(df$Age)
 ```
 
 Check whether `Age` has factor format
+
 ```{r}
 is.factor(df$Age)
 ```
 
 Check levels for `Age`
+
 ```{r}
 levels(df$Age)
 ```
 
-If you wanted to re-arrange the order of levels: "youth", "adult", "senior"
+If you wanted to re-arrange the order of levels: "youth", "adult",
+"senior"
+
 ```{r}
 df$Age <- fct_relevel(df$Age, c("youth", "adult", "senior"))
 levels(df$Age)
 ```
 
-### Commands to change data type
-* as.numeric (quantitative, continious format) 
-* as.integer (quantitative, discrete format)
-* as.charachter (text format)
-* as.factor (categorical format)
-* as.logical (logical format: TRUE/FALSE)
+##### 5.3.2.1 Commands to change data type
 
-### Commands to check your data type
-* is.numeric (quantitative, continious format) 
-* is.integer (quantitative, discrete format)
-* is.charachter (text format)
-* is.factor (categorical format)
-* is.logical (logical format: TRUE/FALSE)
+-   as.numeric (quantitative, continuous format)
+-   as.integer (quantitative, discrete format)
+-   as.character (text format)
+-   as.factor (categorical format)
+-   as.logical (logical format: TRUE/FALSE)
 
-### Why data type matters?
+##### 5.3.2.2 Commands to check your data type
 
-#### exercise #2
+-   is.numeric (quantitative, continuous format)
+-   is.integer (quantitative, discrete format)
+-   is.character (text format)
+-   is.factor (categorical format)
+-   is.logical (logical format: TRUE/FALSE)
 
-Run the following block to draw a pie chart, and see if you can discover anything that does not make sense, try to fix the pie chart.
+##### 5.3.2.3 Why data type matters?
+
+###### 5.3.2.3.1 Exercise #3
+
+Run the following block to draw a pie chart, and see if you can discover
+anything that does not make sense, try to fix the pie chart.
 
 ```{r}
 canada.oil <- data.frame(c("Oil", "Natural gas", "Hydro", "Nuclear", "Coal", "Others"),
                          c("31", "28", "26", "7", "6", "2"))
 names(canada.oil) <- c("type","percentage")
 
-# solution
+# answer
 canada.oil$percentage <- as.numeric(canada.oil$percentage)
 
 canada.oil %>% 
@@ -244,42 +480,116 @@ canada.oil %>%
             position = position_stack(vjust = 0.5))
 ```
 
+# BREAK
 
-## Importing and exporting data 
+## 6 Packages
 
-### Working with built-in datasets
+When you download and install R for the first time, you are installing
+the Base R software. Base R will contain basic functions written by the
+original authors of the R language. If you want to access data and code
+written by other people, you'll need to install it as a package. An R
+package is simply a bunch of data, functions, help menus, vignettes
+(examples), stored together.
 
-Check the description of the "gapminder" dataset
+[Available CRAN Packages By Date of Publication](https://cran.r-project.org/)
+
+Using a package is like using a light bulb. In order to use it, you
+first need to order it to your house (i.e.; your computer) by
+**installing** it. Once you've installed a package, you never need to
+install it again. However, every time you want to actually use the
+package in a new _session_, you need to turn it on by **loading** it.
+
+### 6.1 installation
+
+Install a package
+
 ```{r}
-#?gapminder
+install.packages('tidyverse') 
 ```
 
+Common error message: 
+
+- Warning in install.packages: download of package
+'XXX' failed 
+- WARNING: Rtools is required to build R packages but is
+not currently installed. Please download and install the appropriate
+version of Rtools before proceeding:
+<https://cran.rstudio.com/bin/windows/Rtools/>
+
+### 6.2 loading
+
+Load a package
+
+```{r}
+library('tidyverse')
+```
+
+common error message: 
+
+- Error in library(XXX) : there is no package
+called 'XXX'
+
+Load a package (if no installed yet, install first)
+
+```{r}
+if (!require('gapminder')) install.packages('gapminder') 
+library(gapminder)
+```
+
+(Optional) Update R to the latest version
+
+```{r}
+# if (!require(installr)) install.packages('installr')
+# library(installr)
+# updateR()
+```
+
+Find help for a package
+
+```{r}
+help(package = 'tidyverse')
+help(package = 'gapminder')
+```
+
+## 7 Working with data frame
+
+### 7.1 Accessing built-in datasets
+
+Check the description of the "gapminder" dataset
+
+```{r}
+??gapminder
+```
 
 Import data from the built-in "gapminder" dataset
+
 ```{r}
 countries <- gapminder # create a data frame
 head(countries) #see the first six rows of the dataframe 
 ```
 
 Save the dataframe as a csv file
+
 ```{r}
-write.csv(countries, file="countries.csv")
+write.csv(countries, file="countries.csv") # save to your working directory
 ```
 
 Look at the working directory
+
 ```{r}
 getwd()
 ```
 
-### Importing data from external sources
+### 7.2 Importing data from external sources
 
 CSV data files
+
 ```{r}
-countries <- read.csv(file="countries.csv") # make sure the file is located in your working directory
+countries1 <- read.csv(file="countries.csv") # make sure the file is located in your working directory
 ```
 
-
 SPSS, SAS, or Stata data file
+
 ```{r}
 #install.packages("foreign")
 #library(foreign)
@@ -288,28 +598,30 @@ SPSS, SAS, or Stata data file
 #countries <- read.ssd(file="countries.sas") # SAS
 ```
 
-
-## See the overview of data
+### 7.3 Overview of data
 
 See the entire dataset
+
 ```{r}
 View(countries)
 ```
 
-
 Check the data structure
+
 ```{r}
 str(countries)
 ```
 
-Count the number of observations (measured by the number of rows) and the number of variables (measured by the number of columns)
+Count the number of observations (measured by the number of rows) and
+the number of variables (measured by the number of columns)
+
 ```{r}
 nrow(countries) #To check the number of rows
 ncol(countries) #To check the number of columns
 ```
 
+Summarize the dataframe
 
-Summarise the dataframe
 ```{r}
 summary(countries)
 ```
@@ -317,183 +629,201 @@ summary(countries)
 Check if the dataframe is complete:
 
 Count the number of observations for each available year
+
 ```{r}
 table(countries$year)
 ```
 
+Count the number of observations in each continent for each available
+year
 
-Count the number of observations in each continent for each available year 
 ```{r}
 table(countries$continent, countries$year)
 ```
 
+### 7.4 Data Manipulation with `dplyr`
 
-## Data Manipulation with `dplyr`
-
-
-### Select function
+#### 7.4.1 Select function
 
 Select specific columns such as country, year, lifeExp
+
 ```{r}
 select(countries, country, year, lifeExp)
 ```
 
-
 Select all columns except for continent and gdpPercap
+
 ```{r}
 select(countries, -continent, -gdpPercap) # use subtraction operator
 ```
 
-### Arrange function
+#### 7.4.2 Arrange function
 
 Arrange countries based on life expectancy (from smallest to largest)
+
 ```{r}
 arrange(countries, lifeExp)
 ```
 
+Arrange countries based on life expectancy (from smallest to largest),
+sorted first by year (from earliest year available to most recent)
 
-Arrange countries based on life expectancy (from smallest to largest), sorted first by year (from earliest year available to most recent)
 ```{r}
 arrange(countries, year, lifeExp)
 ```
 
-
 Arrange countries based on life expectancy (from largest to smallest)
+
 ```{r}
 arrange(countries, desc(lifeExp))
 ```
 
+Arrange countries based on life expectancy (from largest to smallest),
+sorted first by year (from earliest year available to most recent)
 
-Arrange countries based on life expectancy (from largest to smallest), sorted first by year (from earliest year available to most recent)
 ```{r}
 arrange(countries, year, desc(lifeExp))
 ```
 
-
-### Filter function
+#### 7.4.3 Filter function
 
 Filter data of countries from 1997 and with Oceania continent
+
 ```{r}
 filter(countries, year==1997, continent=="Oceania")
 ```
 
+Filter data of countries from 2007 and with gdpPercap greater than or
+equal to \$40,000
 
-Filter data of countries from 2007 and with gdpPercap greater than or equal to $40,000
 ```{r}
 filter(countries, year==2007, gdpPercap>=40000)
 ```
 
-
 Filter observations from year 2002 or year 2007
+
 ```{r}
 filter(countries, year==2002 | year==2007) # Use vertical line for Or condition
 ```
 
-#### Exercise #3
+##### 7.4.3.1 Exercise #4
 
-How to filter out observations from year 2002 or 2007?
-Answers:
+How to filter out observations from year 2002 or 2007? Answers:
+
 ```{r}
-filter(countries, year!=2002 & year!=2007) # Use & for And condition
+filter(countries, year!=2002 & year!=2007)
+arrange(filter(countries, year!=2002 & year!=2007), desc(year))
 ```
 
-
-### Mutate function
+#### 7.4.4 Mutate function
 
 Create a new variable called `GDP` (a product of `gdpPercap` and `pop`)
+
 ```{r}
 mutate(countries, GDP=gdpPercap*pop)
 ```
 
-
-#### Paste function
+#### 7.4.5 Paste function
 
 Create a new variable called `country_year` using `paste` function
+
 ```{r}
 mutate(countries, country_year=paste(country,year,sep = " "))
 ```
 
-
-#### Replace and ifelse functions
+#### 7.4.6 Replace and ifelse functions
 
 Create a dummy variable called `europe`
+
 ```{r}
 mutate(countries, europe=replace(continent=="Europe",1,0))
 ```
 
 Create a variable called `decade`
+
 ```{r}
 mutate(countries, decade=ifelse(year<1970,"Before 1970",
-                         ifelse(year>=1970 & year <1990, "1970 to 1990","After 1990")))
+                         ifelse(year>=1970 & year <=1990, "1970 to 1990",
+                         "After 1990")))
 ```
 
-
-### Rename function
+#### 7.4.7 Rename function
 
 Rename`pop` variable as `population`
+
 ```{r}
 rename(countries, population = pop)
 ```
 
+#### 7.4.8 Summarize function
 
-### Summarise function
-
-Available sub-functions:
-
-* Center: mean(), median()
-* Spread: sd(), IQR(), mad()
-* Range: min(), max(), quantile()
-* Position: first(), last(), nth(),
-* Count: n(), n_distinct()
-* Logical: any(), all()
-
+Available sub-functions: \* Center: mean(), median() \* Spread: sd(),
+IQR(), mad() \* Range: min(), max(), quantile() \* Position: first(),
+last(), nth(), \* Count: n(), n_distinct() \* Logical: any(), all()
 
 Find average value of the lifeExp variable
+
 ```{r}
 summarise(countries, mean_lifeExp=mean(lifeExp))
 ```
 
-
 Find range of the lifeExp variable
+
 ```{r}
 summarise(countries, range_lifeExp=max(lifeExp)-min(lifeExp))
 ```
 
+#### 7.4.9 Piping with Multiple Functions
 
-### Piping with Multiple Functions
-
-What if you want to perform multiple functions in R? Use Pipe operator (%>%) in the dplyr package. It allows you to perform multiple functions without using nested parentheses. 
-
+What if you want to perform multiple functions in R? Use Pipe operator
+(%\>%) in the dplyr package. It allows you to perform multiple functions
+without using nested parentheses.
 
 This is how piping looks like:
+
 ```{r}
 # DataFrame%>%
-    #function to execute first %>%
-        #function to execute second %>%
-            #function to execute third
+    # 1st function to execute %>%
+        # 2nd function to execute %>%
+            # 3rd function to execute
 ```
 
+This is how nested parentheses looks like:
 
-#### Group_by function
+```{r}
+# 3rd function to execute ( 2nd function to execute ( 1st function to execute (DataFrame)))
+```
 
-Group_by function allows you to do operations by groups. E.g. find maximum life expectancy by continent
+#### 7.4.10 Group_by function
+
+Group_by function allows you to do operations by groups. E.g. find
+maximum life expectancy by continent
+
 ```{r}
 countries %>% 
   group_by(continent) %>% 
   summarise(max_lifeExp=max(lifeExp))
 ```
 
+An example of nested parentheses without piping
 
-#### Example of Piping
+```{r}
+summarise(group_by(countries, continent), max_lifeExp=max(lifeExp))
+```
+
+Nested parentheses can be hard to write and read.
+
+#### 7.4.11 Exercise #5
+
+Here is an example of piping
 
 Finding average life expectancy in each continent in 2007
 
-* Select country, continent, year, lifeExp
-* Filter observations from 2007
-* Split data by continents
-* Summarise the mean life expectancy within each continent
-* Round the average life expectancy to 2 decimal points
-
+-   Select country, continent, year, lifeExp
+-   Filter observations from 2007
+-   Split data by continents
+-   Summarise the mean life expectancy within each continent
+-   Round the average life expectancy to 2 decimal points
 
 ```{r}
 countries %>%
@@ -504,141 +834,27 @@ countries %>%
             mutate(mean_lifeExp=round(mean_lifeExp,2)) # Use mutate to modify existing variable, round mean weight to 2 decimal points
 ```
 
+Try to complete the following task:
 
-### Exercise #4
+Finding the average of GDP per Capita of Europen countries by year
 
-Finding the average of GDP per Capita of Europen countries
-
-* Filter observations of European countries
-* Group by year
-* Summarize the mean gdpPercap
-* Save the new data frame as `gdp_Europe`
+-   Filter observations of European countries
+-   Group by year
+-   Summarize the mean gdpPercap
+-   Save the new data frame as `gdp_Europe`
 
 Answers:
+
 ```{r}
 gdp_Europe <- countries %>%
-  filter(continent=="Europe") %>%
-      group_by(year) %>%
-      summarise(mean_gdpPercap=mean(gdpPercap))
-gdp_Europe
+  filter(continent == 'Europe') %>%
+  group_by(year) %>%
+  summarise(mean_gdppercap = mean(gdpPercap))
 ```
 
+## 8 Sources
 
-## Combine data sets
-
-```{r}
-df1 <- data.frame(ID = 1:3,                      # Create first example data frame
-                  X1 = c("a1", "a2","a3"),
-                  stringsAsFactors = FALSE)
-df2 <- data.frame(ID = 2:4,                      # Create second example data frame
-                  X2 = c("b1", "b2","b3"),
-                  stringsAsFactors = FALSE)
-df1
-df2
-```
-
-
-Left_join: join matching rows from df2 to df1.
-```{r}
-left_join(df1, df2, by = "ID")
-```
-
-Right_join: join matching rows from df1 to df2
-```{r}
-right_join(df1, df2, by = "ID")
-```
-
-Inner_join: retain only rows in both sets
-```{r}
-inner_join(df1, df2, by = "ID")
-```
-
-Full_join: retain all values, all rows
-```{r}
-full_join(df1, df2, by = "ID")
-```
-
-
-## Working with missing data
-
-
-### Missing values
-
-NA denotes missing values: is.na() is used to test objects if they are NA
-```{r}
-x <- c(1, 2, NA, 5, 3)
-is.na(x)
-```
-
-
-### Removing NA values
-
-A common task is to remove missing values (NAs)
-```{r}
-x <- c(1, 2, NA, 4, NA, 5)
-```
-
-Exclude vector with all the missing values
-```{r}
-x[!is.na(x)]
-```
-
-If you want to filter out all the missing values for a given variable from a df
-```{r}
-#df %>% 
-  #filter(!is.na(variable))
-```
-
-Example of excluding missing values in a df
-```{r}
-# Create a df with missing values from a previous example
-df <- full_join(df1, df2, by = "ID")
-
-# Exclude observations when X1 is NA
-df %>% 
-  filter(!is.na(X1))
-```
-
-
-What if there are multiple things and you want to take the subset with no missing values?
-```{r}
-x <- c(1, 2, NA, 4, NA, 5)
-y <- c("a", NA, "b", "d", NA, "f")
-```
-
-Leave values that are not missing for both x and y
-```{r}
-good <- complete.cases(x, y)
-x[good]
-y[good]
-```
-
-Using `complete.case` to filter out NA values from a df
-```{r}
-df %>% 
-  filter(complete.cases(X1,X2))
-```
-
-
-## Making tables look nice in a Markdown file
-
-Use `datatable` function provided by `DT` package
-```{r}
-#install.packages("DT")
-library(DT)
-datatable(countries)
-```
-
-
-## Exporting dataframes
-
-Save the dataframe as a csv file
-```{r}
-write.csv(countries, file="countries.csv")
-```
-
-
-## Sources
-
-* https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti 
-* https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+-   <https://data-flair.training/blogs/r-tutorial/>
+-   <https://bookdown.org/ndphillips/YaRrr/packages.html>
+-   <https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti>
+-   <https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>
