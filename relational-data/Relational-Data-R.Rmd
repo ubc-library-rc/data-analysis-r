@@ -1,0 +1,451 @@
+---
+title: "Relational Data in R"
+author: "Ashley Yue MAO"
+date: "2022-11-07"
+output:
+  html_document: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+
+# 0 Install and load required packages
+
+Load required packages (if no intalled yet, install first)
+```{r}
+if (!require(tidyverse)) install.packages('tidyverse')
+if (!require(nycflights13)) install.packages('nycflights13')
+```
+
+(Optional) Update R to the latest version
+```{r}
+# if (!require(installr)) install.packages('installr')
+# library(installr)
+# updateR()
+```
+
+
+# 1 Get to know the database `nycflights13`
+
+[R Document](https://rdocumentation.org/packages/nycflights13/versions/1.0.1)
+
+> This package contains information about all flights that departed from NYC (e.g. EWR, JFK and LGA) to destinations in the United States, Puerto Rico, and the American Virgin Islands) in 2013: 336,776 flights in total. To help understand what causes delays, it also includes a number of other useful datasets.
+
+`flight`: All flights that departed from New York City (NYC) in 2013
+```{r}
+View(flights)    
+?flights
+```
+
+`weather`: Hourly meterological data for each airport in NYC:
+- John F. Kennedy International Airport (JFK)
+- LaGuardia Airport (LGA)
+- Newark Liberty International Airport (EWR)
+```{r}
+View(weather)    
+?weather
+```
+
+`planes`: Construction information about each plane
+```{r}
+View(planes)    
+?planes
+```
+
+`airports`: Airport names and locations
+```{r}
+View(airports)    
+?airports
+```
+
+`airline`: Translation between two letter carrier codes and names
+```{r}
+View(airlines)    
+?airlines
+```
+
+![relational diagram](https://bookdown.org/roy_schumacher/r4ds/diagrams/relational-nycflights.png)
+
+
+## 1.1 [Exercises](https://r4ds.had.co.nz/relational-data.html#exercises-28)
+
+> 1. Imagine you wanted to draw (approximately) the route each plane flies from its origin to its destination. What variables would you need? What tables would you need to combine?
+
+> 2. I forgot to draw the relationship between `weather` and `airports`. What is the relationship and how should it appear in the diagram?
+
+> 3. `weather` only contains information for the origin (NYC) airports. If it contained weather records for all airports in the USA, what additional relation would it define with `flights`?
+
+> 4. We know that some days of the year are “special”, and fewer people than usual fly on them. How might you represent that data as a data frame? What would be the primary keys of that table? How would it connect to the existing tables?
+
+
+# 2 [Keys](https://r4ds.had.co.nz/relational-data.html#keys)
+
+> The variables used to connect each pair of tables are called *keys*. A key is a variable (or a set of variables) that uniquely identifies an observation. There are two types of keys:
+
+> A *primary key* uniquely identifies an observation in its own table. For example, `planes$tailnum` is a primary key because it uniquely identifies each plane in the `planes` table.
+
+> A *foreign key* uniquely identifies an observation in another table. For example, the `flights$tailnum` is a foreign key because it appears in the `flights` table where it matches each flight to a unique plane in the `planes` table.
+
+> A variable can be both a primary key and a foreign key. For example, `origin` is part of the `weather` primary key, and is also a foreign key for the `airport` table.
+
+> Once you’ve identified the primary keys in your tables, it’s good practice to verify that they do indeed uniquely identify each observation. One way to do that is to `count()` the primary keys and look for entries where n is greater than one:
+
+```{r}
+planes %>% 
+  count(tailnum) %>% 
+  filter(n > 1)
+
+weather %>% 
+  count(year, month, day, hour, origin) %>% 
+  filter(n > 1)
+```
+
+
+## 2.1 Exercises
+
+What’s the primary key in the `weather` table? Experiment by entering different combinations of keys.
+```{r}
+weather %>% 
+  count() %>% 
+  filter(n > 1)
+```
+
+What’s the primary key in the `flights` table? Experiment by entering different combinations of keys.
+```{r}
+flights %>% 
+  count() %>% 
+  filter(n > 1)
+```
+
+
+## 2.2 Surrogate key
+
+> Sometimes a table (e.g., `flights`) doesn’t have an explicit primary key: each row is an observation, but no combination of variables reliably identifies it. 
+
+> If a table lacks a primary key, it’s sometimes useful to add one with `mutate()` and `row_number()`. That makes it easier to match observations if you’ve done some filtering and want to check back in with the original data. This is called a *surrogate key*.
+
+Add a surrogate key to flights.
+```{r}
+flights1 <- flights %>%
+  mutate(id = row_number()) %>%
+  glimpse()
+```
+
+
+## 2.3 [Exercise](https://r4ds.had.co.nz/relational-data.html#exercises-29)
+
+Work in groups in the breakout rooms for the following task. Each group will be invited to introduce the dataset and its key in the main room. Raise hand when you need support.
+
+> Identify the keys in the following datasets
+> Lahman::Batting
+> babynames::babynames
+> nasaweather::atmos
+> fueleconomy::vehicles
+> ggplot2::diamonds
+> (You might need to install some packages and read some documentation.)
+
+
+# 3 Join tables
+
+Mutating joins vs filtering joins:
+> mutating joins add new *variables* to one data frame from matching observations in another
+> filtering joins filter *observations* from one data frame based on whether or not they match an observation in the other table
+
+
+## 3.1 Mutating joins
+
+Mutating join example: add full airline name from `airlines` table to the `flights` data
+```{r}
+flights %>% 
+  select(year:day, hour, tailnum, carrier) %>%  
+  left_join(airlines, by = "carrier")
+```
+
+It is called "mutating" joins because it could be achieved by using `mutate()` and R’s base subsetting: 
+```{r}
+flights %>% 
+  select(year:day, hour, tailnum, carrier) %>% 
+  mutate(name = airlines$name[match(carrier, airlines$carrier)]) 
+# hard to generalise when you need to match multiple variables, and takes close reading to figure out the overall intent.
+```
+
+
+### 3.1.1 How joins work
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     3, "x3")
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2",
+     4, "y3")
+x
+y
+```
+
+![visual representations](https://d33wubrfki0l68.cloudfront.net/108c0749d084c03103f8e1e8276c20e06357b124/5f113/diagrams/join-setup.png)
+
+
+#### 3.1.1.1 Inner join
+
+```{r}
+x %>% 
+  inner_join(y, by = "key")
+```
+
+![Inner join](https://d33wubrfki0l68.cloudfront.net/3abea0b730526c3f053a3838953c35a0ccbe8980/7f29b/diagrams/join-inner.png)
+
+
+#### 3.1.1.2 Outer join
+
+Left join vs right join vs full join
+> left join keeps all observations in left table
+> right join keeps all observations in right table
+> full join keeps all observations in both tables
+
+![left vs right vs full join](https://d33wubrfki0l68.cloudfront.net/9c12ca9e12ed26a7c5d2aa08e36d2ac4fb593f1e/79980/diagrams/join-outer.png)
+
+![Venn diagram](https://d33wubrfki0l68.cloudfront.net/aeab386461820b029b7e7606ccff1286f623bae1/ef0d4/diagrams/join-venn.png)
+
+> Limitation: a Venn diagram can’t show what happens when keys don’t uniquely identify an observation
+
+
+#### 3.1.1.3 Duplicate keys
+
+> 1. One table has duplicate keys. This is useful when you want to add in additional information as there is typically a one-to-many relationship.
+
+![one to many](https://d33wubrfki0l68.cloudfront.net/6faac3e996263827cb57fc5803df6192541a9a4b/c7d74/diagrams/join-one-to-many.png)
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     2, "x3",
+     1, "x4")
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2")
+left_join(x, y, by = "key")
+```
+
+> 2. Both tables have duplicate keys. This is usually an error because in neither table do the keys uniquely identify an observation. When you join duplicated keys, you get all possible combinations, the Cartesian product:
+
+![many to many](https://d33wubrfki0l68.cloudfront.net/d37530bbf7749f48c02684013ae72b2996b07e25/37510/diagrams/join-many-to-many.png)
+
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     2, "x3",
+     3, "x4")
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2",
+     2, "y3",
+     3, "y4")
+left_join(x, y, by = "key")
+```
+
+
+#### 3.1.1.4 Key columns
+
+> So far, the pairs of tables have always been joined by a single variable, and that variable has the same name in both tables. That constraint was encoded by `by = "key"`.
+
+> 1. The default, `by = NULL`, uses all variables that appear in both tables, the so called *natural* join. For example, the `flights` and `weather` tables match on their common variables: `year`, `month`, `day`, `hour` and `origin`.
+
+```{r}
+flights %>% 
+  select(year:day, hour, tailnum, carrier) %>%  
+  left_join(weather)
+```
+
+2. When a "common" variable in two tables with different meanings. Uses only some of the common variables by specifying `by = "x"`.  
+
+> For example, `flights` and `planes` have `year` variables, but 
+
+- `year` in `flights` means year of departure.
+- `year` in `planes` means year of manufacture.
+
+> they mean different things so we only join by `tailnum`.
+
+```{r}
+flights %>% 
+  select(year:day, hour, tailnum, carrier) %>%  
+  left_join(planes, by = "tailnum")
+```
+
+3. When variables with the same meaning are named differently in two tables, use them by specifying `by = c("a" = "b")`. 
+
+> For example, if we want to draw a map we need to combine the `flights` data with the `airports` data which contains the location (`lat` and `lon`) of each airport. Each flight has an `origin` and `destination` airport, so we need to specify which one we want to join to:
+
+```{r}
+flights %>% 
+  select(year:day, hour, dest, tailnum, carrier) %>%  
+  left_join(airports, c("dest" = "faa"))
+
+flights %>% 
+  select(year:day, hour, origin, tailnum, carrier) %>%  
+  left_join(airports, c("origin" = "faa"))
+```
+
+#### 3.1.1.5 [Exercises](https://r4ds.had.co.nz/relational-data.html#exercises-30)
+
+> 1. Compute the average delay by destination, then join on the `airports` data frame so you can show the spatial distribution of delays. Here’s an easy way to draw a map of the United States:
+
+```{r}
+airports %>%
+  semi_join(flights, c("faa" = "dest")) %>%
+  ggplot(aes(lon, lat)) +
+    borders("state") +
+    geom_point() +
+    coord_quickmap()
+```
+
+> (Don’t worry if you don’t understand what `semi_join()` does — you’ll learn about it next.)
+
+> You might want to use the `size` or `colour` of the points to display the average delay for each airport.
+
+> 2. Add the location of the origin and destination (i.e. the `lat` and `lon`) to `flights`.
+
+> 3. Is there a relationship between the age of a plane and its delays?
+
+> 4. What weather conditions make it more likely to see a delay?
+
+> 5. What happened on June 13 2013? Display the spatial pattern of delays, and then use Google to cross-reference with the weather.
+
+
+#### 3.1.1.6 Other implementations
+
+> `base::merge()` can perform all four types of mutating join:
+
+|       dplyr          |       merge                                 | 
+|:--------------------:|:-------------------------------------------:|
+|`  inner_join(x, y)  `|`  merge(x, y)                              `|
+|`  left_join(x, y)   `|`  merge(x, y, all.x = TRUE)                `|
+|`  right_join(x, y)  `|`  merge(x, y, all.y = TRUE)                `|
+|`  full_join(x, y)   `|`  merge(x, y, all.x = TRUE, all.y = TRUE)  `|
+
+Advantages of the specific dplyr verbs:
+- More clearly convey the intent of your code.
+- Considerably faster and don’t mess with the order of the rows.
+- Conversion to SQL using dbplyr. SQL is the inspiration for dplyr’s conventions.
+
+|      dplyr                   |      SQL                                       | 
+|:----------------------------:|:----------------------------------------------:|
+|` inner_join(x, y, by = "z") `|` SELECT * FROM x INNER JOIN y USING (z)       `|
+|` left_join(x, y, by = "z")  `|` SELECT * FROM x LEFT OUTER JOIN y USING (z)  `|
+|` right_join(x, y, by = "z") `|` SELECT * FROM x RIGHT OUTER JOIN y USING (z) `|
+|` full_join(x, y, by = "z")  `|` SELECT * FROM x FULL OUTER JOIN y USING (z)  `|
+
+
+## 3.2 Filtering joins
+
+> Similar to mutating joins, but affect the *observations* rather than the *variables*:
+  - `semi_join(x, y)` *keeps* all observations in x that have a match in y.
+  - `anti_join(x, y)` *drops* all observations in x that have a match in y.
+
+
+### 3.2.1 Semi-join
+
+> Semi-joins are useful for matching filtered summary tables back to the original rows. For example, imagine you’ve found the top two most popular destinations:
+
+```{r}
+top_dest <- flights %>%
+  count(dest, sort = TRUE) %>%
+  head(2)
+top_dest
+```
+
+> Now you want to find each flight that went to one of those destinations. You could construct a filter yourself:
+
+```{r}
+flights %>% 
+  filter(dest %in% top_dest$dest)
+```
+
+You can also use a semi-join, which does the same thing and could be more handy when you have multiple variables.
+
+```{r}
+flights %>% 
+  semi_join(top_dest)
+```
+
+> Graphically, a semi-join looks like this:
+![semi-join](https://d33wubrfki0l68.cloudfront.net/028065a7f353a932d70d2dfc82bc5c5966f768ad/85a30/diagrams/join-semi.png)
+
+> Only the existence of a match is important; it doesn’t matter which observation is matched. This means that filtering joins never duplicate rows like mutating joins do:
+![semi-join-many](https://d33wubrfki0l68.cloudfront.net/e1d0283160251afaeca35cba216736eb995fee00/1b3cd/diagrams/join-semi-many.png)
+
+
+### 3.2.2 Anti-join
+
+> The inverse of a semi-join is an anti-join. An anti-join keeps the rows that don’t have a match:
+![anti-join](https://d33wubrfki0l68.cloudfront.net/f29a85efd53a079cc84c14ba4ba6894e238c3759/c1408/diagrams/join-anti.png)
+
+> Anti-joins are useful for diagnosing join mismatches. For example, when connecting `flights` and `planes`, you might be interested to know that there are many flights that don’t have a match in `planes`:
+
+```{r}
+flights %>%
+  anti_join(planes, by = "tailnum") %>%
+  count(tailnum, sort = TRUE)
+```
+
+
+### 3.2.3 [Exercises](https://r4ds.had.co.nz/relational-data.html#exercises-31)
+
+> 1. What does it mean for a flight to have a missing `tailnum`? What do the tail numbers that don’t have a matching record in `planes` have in common? (Hint: one variable explains ~90% of the problems.)
+
+> 2. Filter flights to only show flights with planes that have flown at least 100 flights.
+
+> 3. Combine `fueleconomy::vehicles` and `fueleconomy::common` to find only the records for the most common models.
+
+> 4. Find the 48 hours (over the course of the whole year) that have the worst delays. Cross-reference it with the `weather` data. Can you see any patterns?
+
+> 5. What does `anti_join(flights, airports, by = c("dest" = "faa"))` tell you? What does `anti_join(airports, flights, by = c("faa" = "dest"))` tell you?
+
+> 6. You might expect that there’s an implicit relationship between plane and airline, because each plane is flown by a single airline. Confirm or reject this hypothesis using the tools you’ve learned above.
+
+
+# 4. Note when working with your own data
+
+> The data you’ve been working with in this chapter has been cleaned up so that you’ll have as few problems as possible. Your own data is unlikely to be so nice, so there are a few things that you should do with your own data to make your joins go smoothly.
+1. Start by identifying the variables that form the primary key in each table.
+2. Check that none of the variables in the primary key are missing. If a value is missing then it can’t identify an observation!
+3. Check that your foreign keys match primary keys in another table. The best way to do this is with an `anti_join()`. It’s common for keys not to match because of data entry errors. Fixing these is often a lot of work.
+4. Be aware that simply checking the number of rows before and after the join is not sufficient to ensure that your join has gone smoothly. If you have an inner join with duplicate keys in both tables, you might get unlucky as the number of dropped rows might exactly equal the number of duplicated rows!
+
+
+# 5. Set operations (Optional)
+
+> All these operations work with a complete row, comparing the values of every variable. These expect the x and y inputs to have the same variables, and treat the observations like sets:
+`intersect(x, y)`: return only observations in both x and y.
+`union(x, y)`: return unique observations in x and y.
+`setdiff(x, y)`: return observations in x, but not in y.
+
+```{r}
+df1 <- tribble(
+  ~x, ~y,
+   1,  1,
+   2,  1)
+df2 <- tribble(
+  ~x, ~y,
+   1,  1,
+   1,  2)
+
+intersect(df1, df2)
+
+union(df1, df2)
+
+setdiff(df1, df2)
+
+setdiff(df2, df1)
+```
